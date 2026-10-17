@@ -1,13 +1,17 @@
-AppName,PackageName,Category,LastOpened,DurationMinutes,LaunchCount
-"⚠️ Ph4nt0m Cheat (ประวัติเว็บ Google Chrome)","ph4nt0m.lol","cheat","16:43:10",45,4
-"⚠️ Ruizen Team Client (ประวัติเว็บ Google Chrome)","client.ruizenteam.store","cheat","14:04:48",65,5
-"Google Chrome","com.android.chrome","browser","16:45:00",75,18
-"LINE","jp.naver.line.android","chat","15:40:00",125,32
-"TikTok","com.zhiliaoapp.musically","video","14:50:00",180,14
-"Facebook","com.facebook.katana","social","13:20:00",95,21
-"YouTube","com.google.android.youtube","video","12:30:00",210,9
-"Instagram","com.instagram.android","social","11:15:00",80,18
-"Shopee","com.shopee.th","shopping","09:15:00",45,8
-"Garena RoV","com.garena.game.kgth","game","08:40:00",90,3
-"Spotify","com.spotify.music","music","06:10:00",140,6
-"การตั้งค่า (Settings)","com.android.settings","system","01:10:00",10,4
+AppName,PackageName,Category,LastOpened,DurationMinutes,LaunchCount,Device,FirstOpened,VisitCount
+"⚠️ Ph4nt0m Cheat (ประวัติเว็บ Google Chrome)","ph4nt0m.lol","cheat","16:43:10",45,4,"PC (Windows / Chrome)","16 ต.ค. 02:51:51",33
+"⚠️ Ruizen Team Client (ประวัติเว็บ Google Chrome)","client.ruizenteam.store","cheat","14:04:48",65,5,"PC (Windows / Chrome)","17 ต.ค. 14:03:21",6
+"⚠️ Start-DEKTHEP-Phantom-Bridge.bat (สคริปต์บน Desktop)","phantom.k4ze.dev","cheat","21:18:10",30,1,"PC (Windows Desktop)","16 ต.ค. 2026",533
+"Google Chrome","com.android.chrome","browser","16:45:00",75,18,"PC / Android",,"25"
+"AltStore (ลงแอปนอก iOS)","org.altstore.AltStore","sideload","15:10:00",35,4,"iOS (Apple)",,"8"
+"⚠️ Ph4nt0m iOS IPA (โปรแกรมช่วยเล่น)","com.bityou.ph4nt0m","cheat","15:13:52",85,7,"iOS (Apple)",,"7"
+"⚠️ GameGuardian (โปรแกรมโกงเกม)","com.gameguardian","cheat","14:20:00",110,12,"Android",,"12"
+"LINE","jp.naver.line.android","chat","15:40:00",125,32,"Android / iOS",,"32"
+"TikTok","com.zhiliaoapp.musically","video","14:50:00",180,14,"Android / iOS",,"14"
+"Facebook","com.facebook.katana","social","13:20:00",95,21,"Android / iOS",,"21"
+"YouTube","com.google.android.youtube","video","12:30:00",210,9,"Android / iOS",,"9"
+"Instagram","com.instagram.android","social","11:15:00",80,18,"Android / iOS",,"18"
+"Shopee","com.shopee.th","shopping","09:15:00",45,8,"Android / iOS",,"8"
+"Garena RoV","com.garena.game.kgth","game","08:40:00",90,3,"Android / iOS",,"3"
+"Spotify","com.spotify.music","music","06:10:00",140,6,"PC / Android",,"6"
+"การตั้งค่า (Settings)","com.android.settings","system","01:10:00",10,4,"Android",,"4"

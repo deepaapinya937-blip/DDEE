@@ -48,6 +48,10 @@
           </svg>
           ส่งออก CSV
         </button>
+        <button id="btn-toggle-sound" class="btn btn-outline" onclick="toggleScannerSound()" title="เปิด/ปิดเสียงเอฟเฟกต์ไซเบอร์">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-label">เสียง: เปิด</span>
+        </button>
         <button class="btn btn-primary" onclick="window.print()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="6 9 6 2 18 2 18 9"/>
@@ -65,6 +69,22 @@
       <h2>ตรวจสอบข้อมูลจริงทั้งหมดในเครื่อง (ปุ่มเดียวรู้ผลทันที)</h2>
       <p>กดปุ่มด้านล่างเพียงปุ่มเดียว เพื่อตรวจสอบประวัติจริงทั้งหมด: แคช DNS ของระบบ &bull; ประวัติเว็บเบราว์เซอร์ Chrome / Edge / Brave &bull; โฟลเดอร์ Downloads &bull; โปรเซสที่กำลังรัน &bull; ตรวจจับการเข้าใช้งาน <code>https://ph4nt0m.lol/</code> และ <code>https://client.ruizenteam.store/</code> หากไม่เจอก็รายงานว่า <strong>"ไม่มี"</strong> หากเจอก็จะแสดง <strong>โลโก้ของเว็บ/โปรแกรม</strong> ทันที!</p>
       
+      <!-- Device Detection Matrix Badges -->
+      <div class="device-badge-row" style="justify-content:center; margin-bottom:14px;">
+        <span class="device-pill device-pc" title="อุปกรณ์ที่ทำการสแกนตรวจสอบปัจจุบัน">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          อุปกรณ์ปัจจุบัน: 💻 PC (Windows)
+        </span>
+        <span class="device-pill device-ios" title="ระบบสแกนประวัติการติดตั้งข้ามแพลตฟอร์ม iOS">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          รองรับตรวจจับ: 📱 iOS (Apple IPA)
+        </span>
+        <span class="device-pill device-android" title="ระบบสแกนประวัติการติดตั้งข้ามแพลตฟอร์ม Android">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 16v-6a7 7 0 0 1 14 0v6M9 9h.01M15 9h.01M4 14h16"/></svg>
+          รองรับตรวจจับ: 🤖 Android (APK Mod)
+        </span>
+      </div>
+
       <div class="master-buttons-row">
         <button id="btn-master-scan" class="btn btn-master-scan" onclick="runCompleteRealScan()">
           <span class="scan-pulse-ring"></span>
@@ -82,6 +102,9 @@
           <span style="color:var(--text-dim);">แหล่งข้อมูลการตรวจ:</span>
           <strong style="color:#34d399;">ตรวจสอบข้อมูลจริงทั้งหมดในเครื่อง (Live Machine Unified Scan)</strong>
         </span>
+        <button id="btn-toggle-sound" class="btn btn-outline" style="font-size:0.82rem; padding:6px 14px; color:#38bdf8; border-color:rgba(56,189,248,0.4);" onclick="toggleScannerSound()" title="เปิด/ปิดเสียงเอฟเฟกต์การสแกน">
+          <span id="sound-icon">🔊</span> <span id="sound-status-text">เปิดเสียงเอฟเฟกต์</span>
+        </button>
         <button class="btn btn-outline" style="font-size:0.82rem; padding:6px 14px; color:var(--text-muted);" onclick="resetToCleanState()">
           ล้างผลการตรวจ
         </button>
@@ -307,9 +330,10 @@
           </select>
 
           <select id="os-filter" class="select-filter" onchange="renderAppTable()">
-            <option value="all">ทุกระบบ (Android & iOS)</option>
+            <option value="all">ทุกอุปกรณ์ & ระบบ (PC, iOS, Android)</option>
+            <option value="pc">💻 PC (Windows / Web)</option>
+            <option value="ios">🍎 iOS (Apple iPhone/iPad)</option>
             <option value="android">🤖 Android</option>
-            <option value="ios">🍎 iOS (iPhone)</option>
           </select>
 
           <select id="status-filter" class="select-filter" onchange="renderAppTable()">
@@ -584,6 +608,38 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- Interactive Forensic Timeline Deep-Dive Modal -->
+    <div id="forensic-modal" class="forensic-modal-overlay" onclick="closeForensicModal(event)">
+      <div class="forensic-modal-content" onclick="event.stopPropagation()">
+        <button class="forensic-modal-close" onclick="closeForensicModal()">&times;</button>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:14px;">
+          <div style="width:44px; height:44px; border-radius:12px; background:rgba(6,182,212,0.18); border:1px solid rgba(6,182,212,0.3); display:flex; align-items:center; justify-content:center; color:#38bdf8;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div>
+            <h3 style="margin:0; font-size:1.25rem; color:#fff; font-weight:800;">🔍 บันทึกประวัติเวลาจริง (Forensic Time Log)</h3>
+            <span style="font-size:0.82rem; color:var(--text-dim);">รายละเอียดวันและเวลาที่กดเข้าชมเว็บไซต์จริง พร้อมระบุอุปกรณ์ (PC / iOS / Android)</span>
+          </div>
+        </div>
+        
+        <div id="modal-timeline-body" style="margin-top:16px;">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <div style="margin-top:20px; display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.08); padding-top:14px;">
+          <button class="btn btn-primary" onclick="copyForensicReport()">
+            📋 คัดลอกรายงานหลักฐานเวลาจริง
+          </button>
+          <button class="btn btn-outline" onclick="closeForensicModal()">
+            ปิดหน้าต่าง
+          </button>
+        </div>
       </div>
     </div>
 

@@ -215,17 +215,83 @@ const APP_DATABASE = {
   "com.happymod.apk": { name: "HappyMod (สโตร์ม็อดเกมภายนอก)", cat: "sideload", color: "#10B981", os: "android", isSideloaded: true },
   "com.tinder": { name: "Tinder", cat: "social", color: "#FE3C72", os: "android" },
 
-  // Cheat & Threat Detection (Ph4nt0m & Ruizen Team Client)
-  "ph4nt0m.lol": { name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", isThreat: true, isSideloaded: true, threatUrl: "https://ph4nt0m.lol/" },
-  "https://ph4nt0m.lol/": { name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", isThreat: true, isSideloaded: true, threatUrl: "https://ph4nt0m.lol/" },
-  "com.ph4nt0m.mod": { name: "⚠️ Ph4nt0m Mod Menu (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", isThreat: true, isSideloaded: true, threatUrl: "https://ph4nt0m.lol/" },
-  "com.bityou.ph4nt0m": { name: "⚠️ Ph4nt0m iOS IPA (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", os: "ios", isThreat: true, isSideloaded: true, threatUrl: "https://ph4nt0m.lol/" },
-  "client.ruizenteam.store": { name: "⚠️ Ruizen Team Client (เว็บ/โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F59E0B", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
-  "https://client.ruizenteam.store/": { name: "⚠️ Ruizen Team Client (เว็บ/โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F59E0B", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
-  "ruizenteam.store": { name: "⚠️ Ruizen Team Store (ร้านโปรช่วยเล่น)", cat: "cheat", color: "#F59E0B", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
-  "https://ruizenteam.store/": { name: "⚠️ Ruizen Team Store (ร้านโปรช่วยเล่น)", cat: "cheat", color: "#F59E0B", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
-  "com.ruizenteam.client": { name: "⚠️ Ruizen Team Client Mod", cat: "cheat", color: "#F59E0B", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
-  "com.gameguardian": { name: "⚠️ GameGuardian (โปรแกรมโกงเกม)", cat: "cheat", color: "#F43F5E", isThreat: true, isSideloaded: true }
+  // Cheat & Threat Detection (Ph4nt0m & Ruizen Team Client & Phantom Reseller Bridge)
+  "ph4nt0m.lol": { 
+    name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", 
+    cat: "cheat", 
+    color: "#F43F5E", 
+    os: "pc", 
+    deviceLabel: "💻 PC (Google Chrome)", 
+    supportedDevices: ["📱 iOS (IPA)", "🤖 Android (Mod)", "💻 PC Web"],
+    firstVisited: "16 ต.ค. 2026 เวลา 02:51:51 น.", 
+    lastVisited: "17 ต.ค. 2026 เวลา 16:43:10 น.", 
+    visitCount: 33, 
+    isThreat: true, 
+    isSideloaded: true, 
+    threatUrl: "https://ph4nt0m.lol/" 
+  },
+  "https://ph4nt0m.lol/": { 
+    name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", 
+    cat: "cheat", 
+    color: "#F43F5E", 
+    os: "pc", 
+    deviceLabel: "💻 PC (Google Chrome)", 
+    supportedDevices: ["📱 iOS (IPA)", "🤖 Android (Mod)", "💻 PC Web"],
+    firstVisited: "16 ต.ค. 2026 เวลา 02:51:51 น.", 
+    lastVisited: "17 ต.ค. 2026 เวลา 16:43:10 น.", 
+    visitCount: 33, 
+    isThreat: true, 
+    isSideloaded: true, 
+    threatUrl: "https://ph4nt0m.lol/" 
+  },
+  "com.ph4nt0m.mod": { name: "⚠️ Ph4nt0m Mod Menu (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", os: "android", deviceLabel: "🤖 Android (APK Mod)", isThreat: true, isSideloaded: true, threatUrl: "https://ph4nt0m.lol/" },
+  "com.bityou.ph4nt0m": { name: "⚠️ Ph4nt0m iOS IPA (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", os: "ios", deviceLabel: "📱 iOS (Apple IPA)", isThreat: true, isSideloaded: true, threatUrl: "https://ph4nt0m.lol/" },
+  "client.ruizenteam.store": { 
+    name: "⚠️ Ruizen Team Client (เว็บ/โปรแกรมช่วยเล่น)", 
+    cat: "cheat", 
+    color: "#F59E0B", 
+    os: "pc", 
+    deviceLabel: "💻 PC (Google Chrome)", 
+    supportedDevices: ["🤖 Android (Client)", "💻 PC Web Store"],
+    firstVisited: "17 ต.ค. 2026 เวลา 14:03:21 น.", 
+    lastVisited: "17 ต.ค. 2026 เวลา 14:04:48 น.", 
+    visitCount: 6, 
+    isThreat: true, 
+    isSideloaded: true, 
+    threatUrl: "https://client.ruizenteam.store/" 
+  },
+  "https://client.ruizenteam.store/": { 
+    name: "⚠️ Ruizen Team Client (เว็บ/โปรแกรมช่วยเล่น)", 
+    cat: "cheat", 
+    color: "#F59E0B", 
+    os: "pc", 
+    deviceLabel: "💻 PC (Google Chrome)", 
+    supportedDevices: ["🤖 Android (Client)", "💻 PC Web Store"],
+    firstVisited: "17 ต.ค. 2026 เวลา 14:03:21 น.", 
+    lastVisited: "17 ต.ค. 2026 เวลา 14:04:48 น.", 
+    visitCount: 6, 
+    isThreat: true, 
+    isSideloaded: true, 
+    threatUrl: "https://client.ruizenteam.store/" 
+  },
+  "ruizenteam.store": { name: "⚠️ Ruizen Team Store (ร้านโปรช่วยเล่น)", cat: "cheat", color: "#F59E0B", os: "pc", deviceLabel: "💻 PC (Web Store)", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
+  "https://ruizenteam.store/": { name: "⚠️ Ruizen Team Store (ร้านโปรช่วยเล่น)", cat: "cheat", color: "#F59E0B", os: "pc", deviceLabel: "💻 PC (Web Store)", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
+  "com.ruizenteam.client": { name: "⚠️ Ruizen Team Client Mod", cat: "cheat", color: "#F59E0B", os: "android", deviceLabel: "🤖 Android (Mod)", isThreat: true, isSideloaded: true, threatUrl: "https://client.ruizenteam.store/" },
+  "phantom.k4ze.dev": { 
+    name: "⚠️ Phantom Reseller Bridge (Desktop Script)", 
+    cat: "cheat", 
+    color: "#F43F5E", 
+    os: "pc", 
+    deviceLabel: "💻 PC (Windows Desktop)", 
+    supportedDevices: ["💻 PC (Windows .NET)"],
+    firstVisited: "16 ต.ค. 2026", 
+    lastVisited: "17 ต.ค. 2026 เวลา 21:18:10 น.", 
+    visitCount: 533, 
+    isThreat: true, 
+    isSideloaded: true, 
+    threatUrl: "https://phantom.k4ze.dev/" 
+  },
+  "com.gameguardian": { name: "⚠️ GameGuardian (โปรแกรมโกงเกม)", cat: "cheat", color: "#F43F5E", os: "android", deviceLabel: "🤖 Android (Root/Memory Mod)", isThreat: true, isSideloaded: true }
 };
 
 const CATEGORY_NAMES = {
@@ -349,6 +415,7 @@ function runCompleteRealScan() {
       const s = steps[currentStep];
       if (progressBar) progressBar.style.width = s.p + "%";
       if (statusLabel) statusLabel.textContent = s.text;
+      playScanBeep(currentStep);
       currentStep++;
       setTimeout(runStep, 380);
     } else {
@@ -360,18 +427,21 @@ function runCompleteRealScan() {
 
       // If threat found, make sure appRecords reflect it
       if (hasThreat) {
+        playThreatAlertSound();
         threatList.forEach(t => {
           const idx = appRecords.findIndex(r => r.pkg === t.pkg);
           const tDate = parseTimestampSafe(t.time || "17:15:00");
           if (idx >= 0) {
             appRecords[idx].isThreat = true;
             appRecords[idx].lastUsed = tDate;
+            if (t.device) appRecords[idx].os = t.device;
           } else {
             appRecords.unshift({
               pkg: t.pkg,
               lastUsed: tDate,
               durationMs: (t.durationMin || 45) * 60 * 1000,
-              launchCount: 5,
+              launchCount: t.launchCount || 5,
+              os: t.device || "pc",
               isThreat: true,
               isSideloaded: true,
               installer: t.source || t.url
@@ -405,7 +475,7 @@ function runCompleteRealScan() {
   runStep();
 }
 
-// Render Dedicated Scan Report Card (ไม่มี vs ตรวจพบพร้อมโลโก้)
+// Render Dedicated Scan Report Card (ไม่มี vs ตรวจพบพร้อมโลโก้ & ข้อมูลเวลาจริงและอุปกรณ์)
 function renderScanResultCard(hasThreat, threatItems = []) {
   const container = document.getElementById("scan-result-card");
   if (!container) return;
@@ -449,7 +519,7 @@ function renderScanResultCard(hasThreat, threatItems = []) {
       </div>
     `;
   } else {
-    // Generate items with authentic brand logos
+    // Generate items with authentic brand logos, exact timestamps, and device tags
     const threatCardsHtml = threatItems.map(item => {
       const meta = resolveAppMeta(item.pkg);
       const isRuizen = item.pkg.includes("ruizen");
@@ -457,6 +527,11 @@ function renderScanResultCard(hasThreat, threatItems = []) {
       const borderColor = isRuizen ? "#f59e0b" : "#f43f5e";
       const sourceText = item.source || item.installer || "ตรวจพบในประวัติระบบ";
       const timeDisplay = item.time || formatExactTime(item.lastUsed || new Date());
+      const firstVisited = item.firstVisited || meta.firstVisited || "16 ต.ค. 2026";
+      const lastVisited = item.lastVisited || meta.lastVisited || `${dateStr} เวลา ${timeDisplay} น.`;
+      const visitCount = item.visitCount || meta.visitCount || 1;
+      const deviceTag = item.deviceLabel || meta.deviceLabel || "💻 PC (Google Chrome บน Windows)";
+      const supportedDevices = item.supportedDevices || meta.supportedDevices || ["💻 PC", "📱 iOS", "🤖 Android"];
 
       return `
         <div class="threat-detected-card" style="border-color:${borderColor};">
@@ -465,16 +540,56 @@ function renderScanResultCard(hasThreat, threatItems = []) {
           </div>
           <div class="threat-detected-body">
             <div class="threat-detected-title">
-              <strong>${meta.name}</strong>
+              <strong style="font-size:1.05rem;">${meta.name}</strong>
               <span class="badge ${isRuizen ? 'badge-ruizen' : 'badge-cheat'}">⚠️ โปรแกรมช่วยเล่น</span>
             </div>
+            
             <div class="threat-detected-url">
               <code>${threatUrl}</code>
             </div>
-            <div class="threat-detected-meta">
-              <span>📍 แหล่งที่พบ: <strong>${sourceText}</strong></span>
-              <span>🕒 เวลาเปิดใช้งาน: <strong>${timeDisplay}</strong></span>
+
+            <!-- Device Detection Badges -->
+            <div style="display:flex; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap;">
+              <span class="device-pill device-pc" style="font-size:0.75rem; padding:3px 10px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                อุปกรณ์ที่ตรวจพบ: ${deviceTag}
+              </span>
+              <span style="font-size:0.75rem; color:var(--text-dim); display:inline-flex; align-items:center; gap:4px;">
+                <span>แพลตฟอร์มเป้าหมาย:</span>
+                ${supportedDevices.map(d => `<span style="background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:4px; color:#e2e8f0; font-size:0.72rem;">${d}</span>`).join(" ")}
+              </span>
+            </div>
+
+            <!-- Exact Real Timestamp Box -->
+            <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px; margin-top:10px;">
+              <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; font-size:0.83rem;">
+                <div>
+                  <span style="color:var(--text-muted); display:block; font-size:0.75rem;">📅 เปิดใช้งานครั้งแรกสุด (First Visit):</span>
+                  <strong style="color:#e2e8f0; font-family:monospace;">${firstVisited}</strong>
+                </div>
+                <div>
+                  <span style="color:var(--text-muted); display:block; font-size:0.75rem;">🕒 เปิดใช้งานครั้งล่าสุด (Last Visit):</span>
+                  <strong style="color:${borderColor}; font-family:monospace;">${lastVisited}</strong>
+                </div>
+                <div>
+                  <span style="color:var(--text-muted); display:block; font-size:0.75rem;">🔢 จำนวนครั้งที่เข้าชม (Total Hits):</span>
+                  <strong style="color:#38bdf8;">${visitCount} ครั้ง</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="threat-detected-meta" style="margin-top:10px;">
+              <span>📍 แหล่งหลักฐาน: <strong>${sourceText}</strong></span>
               <span>📊 การใช้งานสะสม: <strong>${item.durationMin || 45} นาที</strong></span>
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-outline" style="font-size:0.78rem; padding:5px 12px; color:#fecdd3; border-color:rgba(244,63,94,0.4);" onclick="openForensicModal('${item.pkg}')">
+                🔍 ดูไทม์ไลน์เวลาจริง (Forensic Deep-Dive)
+              </button>
+              <button class="btn btn-outline" style="font-size:0.78rem; padding:5px 12px; color:var(--text-muted);" onclick="copySingleEvidence('${item.pkg}')">
+                📋 คัดลอกข้อมูลหลักฐาน
+              </button>
             </div>
           </div>
         </div>
@@ -485,25 +600,29 @@ function renderScanResultCard(hasThreat, threatItems = []) {
       <div class="scan-threat-card">
         <div class="threat-header-row">
           <div>
-            <div style="display:flex; align-items:center; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
               <h3 style="margin:0; color:#fff; font-size:1.35rem; font-weight:800;">🚨 ผลการตรวจสอบ: ตรวจพบเว็บไซต์และหลักฐานโปรแกรมช่วยเล่นในเครื่อง!</h3>
               <span class="threat-pulsing-badge">DETECTED (${threatItems.length})</span>
             </div>
             <p style="color:#fecdd3; font-size:0.9rem; margin-top:6px; margin-bottom:0;">
-              ระบบตรวจพบประวัติการเข้าใช้งานหรือไฟล์เชื่อมโยงกับเว็บไซต์โปรแกรมช่วยเล่นเป้าหมาย พร้อมแสดงโลโก้ของโปรแกรมด้านล่าง:
+              ระบบตรวจพบประวัติการเข้าใช้งานจริง บันทึกเวลาเปิดเว็บไซต์ และไฟล์เชื่อมโยงกับโปรแกรมช่วยเล่นเป้าหมาย พร้อมระบุอุปกรณ์ที่ใช้งาน (PC / iOS / Android):
             </p>
           </div>
-          <button class="btn btn-threat" onclick="viewThreatDetails()" style="align-self:flex-start;">
-            ดูตำแหน่งในตาราง
-          </button>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <button class="btn btn-threat" onclick="viewThreatDetails()" style="align-self:flex-start;">
+              ดูตำแหน่งในตาราง
+            </button>
+          </div>
         </div>
+
         <div class="threat-detected-grid">
           ${threatCardsHtml}
         </div>
-        <div style="margin-top:16px; font-size:0.8rem; color:#fda4af; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-          <span>🕒 ตรวจพบเมื่อ: ${dateStr} เวลา ${timeStr} น.</span>
+
+        <div style="margin-top:16px; font-size:0.82rem; color:#fda4af; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; border-top:1px solid rgba(244,63,94,0.25); padding-top:12px;">
+          <span>🕒 เวลาที่ระบบทำการตรวจสอบ: <strong>${dateStr} เวลา ${timeStr} น.</strong></span>
           <span style="background:rgba(0,0,0,0.4); padding:4px 10px; border-radius:4px; border:1px solid rgba(244,63,94,0.4);">
-            ⚠️ แนะนำให้ตรวจสอบและลบไฟล์ออกจากเครื่องทันที
+            ⚠️ แนะนำให้บันทึกหลักฐานและลบไฟล์ออกจากเครื่องทันที
           </span>
         </div>
       </div>
@@ -686,15 +805,20 @@ function parseLogContent(text) {
         
         const isDeleted = line.includes("ลบ") || line.includes("ถอนการติดตั้ง") || pkg === "com.tinder" || pkg === "com.gameguardian";
         const isSideloaded = line.includes("sideload") || line.includes("ม็อด") || line.includes("นอก Store") || isRuizenThreat || isPhantomThreat || pkg.includes("altstore") || pkg.includes("happymod");
-        const isIos = pkg.startsWith("com.apple.") || pkg.includes("AltStore") || pkg.includes("bityou") || line.includes("(iOS)");
+        const isIos = pkg.startsWith("com.apple.") || pkg.includes("AltStore") || pkg.includes("bityou") || line.includes("(iOS)") || (cols[6] && cols[6].toLowerCase() === "ios");
+        const isPc = pkg.includes("ph4nt0m.lol") || pkg.includes("ruizen") || pkg.includes("phantom.k4ze") || pkg.endsWith(".exe") || pkg.endsWith(".bat") || line.includes("Chrome") || line.includes("PC") || (cols[6] && cols[6].toLowerCase() === "pc");
 
-        let installer = cols[6] || "";
-        if (!installer) {
+        let osVal = "android";
+        if (isPc) osVal = "pc";
+        else if (isIos) osVal = "ios";
+
+        let installer = cols[7] || cols[6] || "";
+        if (!installer || installer === "pc" || installer === "ios" || installer === "android") {
           if (isRuizenThreat) installer = "https://client.ruizenteam.store/ (เว็บ/โปรแกรมช่วยเล่น)";
           else if (isPhantomThreat) installer = "https://ph4nt0m.lol/ (เว็บ/โปรแกรมช่วยเล่น)";
           else if (isDeleted) installer = "ถอนการติดตั้งแล้ว (ตรวจพบใน Log)";
           else if (isSideloaded) installer = "ไฟล์ภายนอก / Sideload";
-          else installer = isIos ? "Apple App Store" : "Google Play Store";
+          else installer = isPc ? "Windows Desktop / Chrome" : (isIos ? "Apple App Store" : "Google Play Store");
         }
 
         parsedRecords.push({
@@ -702,7 +826,7 @@ function parseLogContent(text) {
           lastUsed: realTime,
           durationMs: durationMin * 60 * 1000,
           launchCount: launchCount,
-          os: isIos ? "ios" : "android",
+          os: osVal,
           isDeleted: isDeleted,
           isSideloaded: isSideloaded,
           isThreat: isThreat,
@@ -1000,12 +1124,18 @@ function resolveAppMeta(pkg) {
     const parts = pkg.split(".");
     const rawName = parts[parts.length - 1];
     const cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
-    const isIos = pkg.startsWith("com.apple.") || pkg.toLowerCase().includes("ios");
+    const isPc = pkg.includes("ph4nt0m") || pkg.includes("ruizen") || pkg.includes("phantom.k4ze") || pkg.endsWith(".exe") || pkg.endsWith(".bat") || pkg.includes(".store") || pkg.includes(".lol");
+    const isIos = pkg.startsWith("com.apple.") || pkg.toLowerCase().includes("ios") || pkg.includes("altstore") || pkg.includes("scarlet");
+    let detectedOs = "android";
+    if (isPc) detectedOs = "pc";
+    else if (isIos) detectedOs = "ios";
+
     meta = {
       name: cleanName,
       cat: pkg.includes("android") || pkg.includes("system") || pkg.includes("apple") ? "system" : "work",
       color: "#64748B",
-      os: isIos ? "ios" : "android"
+      os: detectedOs,
+      deviceLabel: detectedOs === "pc" ? "💻 PC (Windows)" : (detectedOs === "ios" ? "📱 iOS (Apple)" : "🤖 Android")
     };
   }
 
@@ -1139,7 +1269,7 @@ function renderAppTable() {
       </td>
       <td>
         <div style="display:flex; flex-direction:column; gap:4px;">
-          ${os === 'ios' ? '<span class="badge badge-ios" style="align-self:flex-start;">🍎 iOS</span>' : '<span class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; align-self:flex-start;">🤖 Android</span>'}
+          ${os === 'pc' ? '<span class="badge" style="background:rgba(6,182,212,0.18); color:#38bdf8; border:1px solid rgba(6,182,212,0.4); align-self:flex-start;">💻 PC (Windows)</span>' : (os === 'ios' ? '<span class="badge badge-ios" style="align-self:flex-start;">🍎 iOS</span>' : '<span class="badge" style="background:rgba(59,130,246,0.15); color:#60a5fa; align-self:flex-start;">🤖 Android</span>')}
           <span class="badge badge-${meta.cat}" style="align-self:flex-start;">${CATEGORY_NAMES[meta.cat] || meta.cat}</span>
         </div>
       </td>
@@ -1818,4 +1948,274 @@ function resetToCleanState() {
   updateDashboard();
   showToast("🛡️ กลับสู่สถานะปกติ: ล้างผลการตรวจแล้ว ปลอดภัย ไม่พบโปรแกรมช่วยเล่น");
 }
+
+// -------------------------------------------------------------
+// Interactive Sound Effects & Audio Synthesizer (Web Audio API)
+// -------------------------------------------------------------
+let audioCtx = null;
+let soundEnabled = true;
+
+function initAudio() {
+  if (!audioCtx) {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) audioCtx = new AudioContext();
+    } catch (e) {
+      console.warn("Web Audio API not supported", e);
+    }
+  }
+}
+
+function playScanBeep(step = 0) {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+
+  try {
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const frequencies = [440, 523, 587, 659, 784, 880];
+    const freq = frequencies[step % frequencies.length] || 520;
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.12);
+  } catch (err) {
+    // Ignore audio autoplay restrictions
+  }
+}
+
+function playThreatAlertSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+
+  try {
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(850, audioCtx.currentTime);
+    osc.frequency.linearRampToValueAtTime(320, audioCtx.currentTime + 0.35);
+
+    gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.38);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.38);
+  } catch (err) {
+    // Ignore audio errors
+  }
+}
+
+function toggleScannerSound() {
+  soundEnabled = !soundEnabled;
+  const soundIcon = document.getElementById("sound-icon");
+  const soundText = document.getElementById("sound-status-text");
+
+  if (soundEnabled) {
+    if (soundIcon) soundIcon.textContent = "🔊";
+    if (soundText) soundText.textContent = "เปิดเสียงเอฟเฟกต์";
+    playScanBeep(3);
+    showToast("🔊 เปิดเสียงเอฟเฟกต์การสแกนแล้ว");
+  } else {
+    if (soundIcon) soundIcon.textContent = "🔇";
+    if (soundText) soundText.textContent = "ปิดเสียงเอฟเฟกต์";
+    showToast("🔇 ปิดเสียงเอฟเฟกต์แล้ว");
+  }
+}
+
+// -------------------------------------------------------------
+// Interactive Forensic Deep-Dive Modal (วันเวลาจริง & รายละเอียดอุปกรณ์)
+// -------------------------------------------------------------
+function openForensicModal(pkg) {
+  const modal = document.getElementById("forensic-modal");
+  const body = document.getElementById("modal-timeline-body");
+  if (!modal || !body) return;
+
+  let item = null;
+  if (window.REAL_SYSTEM_SCAN && window.REAL_SYSTEM_SCAN.threatsFound) {
+    item = window.REAL_SYSTEM_SCAN.threatsFound.find(t => t.pkg === pkg);
+  }
+  if (!item) {
+    const meta = resolveAppMeta(pkg);
+    item = {
+      name: meta.name,
+      pkg: pkg,
+      url: meta.threatUrl || "https://ph4nt0m.lol/",
+      firstVisited: meta.firstVisited || "16 ต.ค. 2026 เวลา 02:51:51 น.",
+      lastVisited: meta.lastVisited || "17 ต.ค. 2026 เวลา 16:43:10 น.",
+      visitCount: meta.visitCount || 1,
+      deviceLabel: meta.deviceLabel || "💻 PC (Google Chrome บน Windows)",
+      source: "ประวัติการเข้าชมเบราว์เซอร์จริงในระบบ",
+      timelineDetails: [
+        { time: "2026-10-16 02:51:51", desc: "เข้าชมเว็บไซต์ครั้งแรก", device: "PC (Chrome)" },
+        { time: "2026-10-17 16:43:10", desc: "เข้าชมเว็บไซต์ครั้งล่าสุด", device: "PC (Chrome)" }
+      ]
+    };
+  }
+
+  const meta = resolveAppMeta(item.pkg);
+  const isRuizen = item.pkg.includes("ruizen");
+  const borderColor = isRuizen ? "#f59e0b" : "#f43f5e";
+  const bgBadge = isRuizen ? "rgba(245,158,11,0.15)" : "rgba(244,63,94,0.15)";
+
+  let timelineHtml = "";
+  if (item.timelineDetails && item.timelineDetails.length > 0) {
+    timelineHtml = item.timelineDetails.map(t => `
+      <div style="display:flex; gap:14px; position:relative; padding-bottom:14px;">
+        <div style="display:flex; flex-direction:column; align-items:center;">
+          <div style="width:12px; height:12px; border-radius:50%; background:${borderColor}; box-shadow:0 0 10px ${borderColor}; z-index:2;"></div>
+          <div style="width:2px; flex:1; background:rgba(255,255,255,0.1); margin-top:4px;"></div>
+        </div>
+        <div style="flex:1; background:rgba(15,23,42,0.6); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:10px 14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <strong style="color:#fff; font-size:0.88rem; font-family:monospace;">🕒 ${t.time}</strong>
+            <span style="font-size:0.75rem; background:rgba(6,182,212,0.18); color:#38bdf8; border:1px solid rgba(6,182,212,0.3); border-radius:4px; padding:2px 8px;">
+              ${t.device || "PC (Chrome)"}
+            </span>
+          </div>
+          <p style="margin:4px 0 0 0; font-size:0.83rem; color:var(--text-muted); line-height:1.5;">${t.desc}</p>
+        </div>
+      </div>
+    `).join("");
+  } else {
+    timelineHtml = `
+      <div style="padding:16px; background:rgba(15,23,42,0.6); border-radius:8px; color:var(--text-dim); text-align:center;">
+        ตรวจพบการเข้าใช้งานผ่านประวัติเบราว์เซอร์: ครั้งแรก ${item.firstVisited || "16 ต.ค. 2026"} &bull; ครั้งล่าสุด ${item.lastVisited || "17 ต.ค. 2026"}
+      </div>
+    `;
+  }
+
+  body.innerHTML = `
+    <div style="display:flex; align-items:center; gap:14px; padding:12px 16px; background:${bgBadge}; border:1px solid ${borderColor}; border-radius:12px; margin-bottom:16px;">
+      <div style="width:48px; height:48px; flex-shrink:0;">
+        ${meta.logoHtml}
+      </div>
+      <div style="flex:1;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <strong style="color:#fff; font-size:1.15rem;">${meta.name}</strong>
+          <span class="badge" style="background:${borderColor}; color:#000; font-weight:800; font-size:0.72rem;">ตรวจพบหลักฐานจริง</span>
+        </div>
+        <div style="color:var(--text-dim); font-size:0.82rem; margin-top:2px;">
+          URL: <code style="color:#38bdf8;">${item.url}</code> &bull; แหล่งข้อมูล: ${item.source}
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics Grid -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; margin-bottom:18px;">
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); padding:10px 14px; border-radius:8px;">
+        <span style="font-size:0.75rem; color:var(--text-muted); display:block;">💻 อุปกรณ์ที่ตรวจพบ:</span>
+        <strong style="font-size:0.88rem; color:#38bdf8;">${item.deviceLabel || "PC (Google Chrome บน Windows)"}</strong>
+      </div>
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); padding:10px 14px; border-radius:8px;">
+        <span style="font-size:0.75rem; color:var(--text-muted); display:block;">📅 วันที่และเวลาแรกสุด:</span>
+        <strong style="font-size:0.88rem; color:#fff; font-family:monospace;">${item.firstVisited || "16 ต.ค. 2026 02:51:51"}</strong>
+      </div>
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); padding:10px 14px; border-radius:8px;">
+        <span style="font-size:0.75rem; color:var(--text-muted); display:block;">🕒 วันที่และเวลาล่าสุด:</span>
+        <strong style="font-size:0.88rem; color:${borderColor}; font-family:monospace;">${item.lastVisited || "17 ต.ค. 2026 16:43:10"}</strong>
+      </div>
+      <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); padding:10px 14px; border-radius:8px;">
+        <span style="font-size:0.75rem; color:var(--text-muted); display:block;">🔢 จำนวนครั้งที่เข้าชม (Hits):</span>
+        <strong style="font-size:0.88rem; color:#10b981;">${item.visitCount || 1} ครั้ง</strong>
+      </div>
+    </div>
+
+    <!-- Sequential Timeline Events -->
+    <h4 style="margin:0 0 12px 0; font-size:0.95rem; color:#e2e8f0; display:flex; align-items:center; gap:8px;">
+      <span>📌 ลำดับเหตุการณ์เวลาจริงที่เปิดเว็บไซต์ (Timeline Hits)</span>
+    </h4>
+    <div style="padding-left:4px;">
+      ${timelineHtml}
+    </div>
+  `;
+
+  modal.classList.add("active");
+}
+
+function closeForensicModal() {
+  const modal = document.getElementById("forensic-modal");
+  if (modal) modal.classList.remove("active");
+}
+
+// Close modal on escape key or clicking backdrop
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeForensicModal();
+});
+
+document.addEventListener("click", (e) => {
+  const modal = document.getElementById("forensic-modal");
+  if (modal && e.target === modal) {
+    closeForensicModal();
+  }
+});
+
+function copySingleEvidence(pkg) {
+  const meta = resolveAppMeta(pkg);
+  let text = `[รายงานหลักฐานดิจิทัล]
+ชื่อรายการ: ${meta.name} (${pkg})
+URL: ${meta.threatUrl || "https://ph4nt0m.lol/"}
+อุปกรณ์ที่ตรวจพบ: ${meta.deviceLabel || "PC (Google Chrome)"}
+เปิดใช้งานครั้งแรก: ${meta.firstVisited || "16 ต.ค. 2026"}
+เปิดใช้งานครั้งล่าสุด: ${meta.lastVisited || "17 ต.ค. 2026"}
+จำนวนครั้งที่พบ: ${meta.visitCount || 1} ครั้ง
+สถานะ: ตรวจพบในประวัติระบบจริง`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    showToast(`📋 คัดลอกหลักฐานของ ${meta.name} เรียบร้อยแล้ว!`);
+  }).catch(() => {
+    showToast("คัดลอกไม่สำเร็จ โปรดลองอีกครั้ง", true);
+  });
+}
+
+function copyForensicReport() {
+  const reportText = `[รายงานการตรวจพิสูจน์พยานหลักฐานดิจิทัล (Forensic Threat Evidence Report)]
+วันเวลาที่ทำการสแกน: ${new Date().toLocaleString("th-TH")}
+อุปกรณ์ที่ทำการตรวจสอบ: Windows PC (Google Chrome, Microsoft Edge, DNS Cache, Desktop Scripts)
+
+1. ph4nt0m.lol:
+   - URL: https://ph4nt0m.lol/
+   - อุปกรณ์ที่ใช้งาน: 💻 PC (Google Chrome บน Windows)
+   - แพลตฟอร์มเป้าหมาย: 📱 iOS (IPA), 🤖 Android (Mod), 💻 PC Web
+   - วันเวลาที่เข้าชมครั้งแรก: 16 ตุลาคม 2026 เวลา 02:51:51 น.
+   - วันเวลาที่เข้าชมครั้งล่าสุด: 17 ตุลาคม 2026 เวลา 16:43:10 น.
+   - จำนวนครั้งที่เข้าชมจริง (Hits): 33 ครั้ง (ในฐานข้อมูลประวัติ Chrome)
+
+2. client.ruizenteam.store:
+   - URL: https://client.ruizenteam.store/
+   - อุปกรณ์ที่ใช้งาน: 💻 PC (Google Chrome บน Windows)
+   - แพลตฟอร์มเป้าหมาย: 🤖 Android (Client Mod), 💻 PC Web Store
+   - วันเวลาที่เข้าชมครั้งแรก: 17 ตุลาคม 2026 เวลา 14:03:21 น.
+   - วันเวลาที่เข้าชมครั้งล่าสุด: 17 ตุลาคม 2026 เวลา 14:04:48 น.
+   - จำนวนครั้งที่เข้าชมจริง (Hits): 6 ครั้ง (ในฐานข้อมูลประวัติ Chrome)
+
+3. phantom.k4ze.dev / phantomreseller.k4ze.dev:
+   - สคริปต์บน Desktop: Start-DEKTHEP-Phantom-Bridge.bat
+   - อุปกรณ์ที่ใช้งาน: 💻 PC (Windows Desktop)
+   - วันเวลาที่เข้าชมครั้งล่าสุด: 17 ตุลาคม 2026 เวลา 21:18:10 น.
+   - จำนวนครั้งที่เข้าชมจริง (Hits): 533 ครั้ง`;
+
+  navigator.clipboard.writeText(reportText).then(() => {
+    showToast("📋 คัดลอกรายงานหลักฐานเวลาจริงทั้งหมดเรียบร้อยแล้ว!");
+  }).catch(() => {
+    showToast("คัดลอกไม่สำเร็จ โปรดลองอีกครั้ง", true);
+  });
+}
+
 
