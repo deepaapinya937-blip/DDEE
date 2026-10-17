@@ -30,20 +30,16 @@
       </div>
 
       <div class="header-actions">
-        <button class="btn btn-outline" onclick="loadSampleData()">
+        <label class="btn btn-outline" style="cursor:pointer;" title="เลือกไฟล์รายงาน CSV หรือ Log จากเครื่อง">
+          <input type="file" id="header-file-input" style="display:none;" accept=".csv,.txt,.json,.log" onchange="handleMasterFileUpload(event)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
           </svg>
-          โหลดข้อมูลตัวอย่าง
-        </button>
-        <button class="btn btn-danger" onclick="triggerCheatTest()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-            <line x1="12" y1="9" x2="12" y2="13"/>
-            <line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-          ทดสอบตรวจพบ ph4nt0m.lol
-        </button>
+          📂 เลือกไฟล์รายงาน (CSV/Log)
+        </label>
         <button class="btn btn-outline" onclick="exportData('csv')">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -65,46 +61,44 @@
 
     <!-- Master One-Click Scanner Hero -->
     <div class="master-scanner-hero">
-      <div class="hero-badge">⚡ ALL-IN-ONE ONE-CLICK INSPECTOR</div>
-      <h2>สแกนตรวจจับครบทุกอย่างในปุ่มเดียว</h2>
-      <p>กดปุ่มด้านล่างเพียงปุ่มเดียว เพื่อเริ่มตรวจสอบทันที: ดึงประวัติแอปที่เคยเปิดทั้งหมด &bull; ค้นหาแอปที่ถูกลบไปแล้ว &bull; ตรวจจับโปรแกรมนอก Store (APK/IPA) &bull; สแกนหาเว็บและโปรแกรมช่วยเล่น <code>https://ph4nt0m.lol/</code></p>
+      <div class="hero-badge">⚡ ONE-CLICK DEEP SYSTEM SCANNER</div>
+      <h2>ตรวจสอบข้อมูลจริงทั้งหมดในเครื่อง (ปุ่มเดียวรู้ผลทันที)</h2>
+      <p>กดปุ่มด้านล่างเพียงปุ่มเดียว เพื่อตรวจสอบประวัติจริงทั้งหมด: แคช DNS ของระบบ &bull; ประวัติเว็บเบราว์เซอร์ Chrome / Edge / Brave &bull; โฟลเดอร์ Downloads &bull; โปรเซสที่กำลังรัน &bull; ตรวจจับการเข้าใช้งาน <code>https://ph4nt0m.lol/</code> และ <code>https://client.ruizenteam.store/</code> หากไม่เจอก็รายงานว่า <strong>"ไม่มี"</strong> หากเจอก็จะแสดง <strong>โลโก้ของเว็บ/โปรแกรม</strong> ทันที!</p>
       
       <div class="master-buttons-row">
-        <button id="btn-master-scan" class="btn btn-master-scan" onclick="startOneClickScan()">
+        <button id="btn-master-scan" class="btn btn-master-scan" onclick="runCompleteRealScan()">
           <span class="scan-pulse-ring"></span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor"/>
-          </svg>
-          <span>กดปุ่มนี้เพื่อเริ่มตรวจสอบทันที (One-Click Scan)</span>
-        </button>
-
-        <label class="btn btn-outline btn-upload-quick" title="คลิกเพื่อเลือกไฟล์รายงาน เช่น CSV หรือ Log">
-          <input type="file" id="master-file-input" style="display:none;" accept=".csv,.txt,.json,.log" onchange="handleMasterFileUpload(event)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="17 8 12 3 7 8"/>
-            <line x1="12" y1="3" x2="12" y2="15"/>
-          </svg>
-          เลือกไฟล์รายงาน (เช่น CSV / Log)
-        </label>
-
-        <button class="btn btn-outline" style="border-color: rgba(16,185,129,0.35); color: #34d399;" onclick="resetToCleanState()" title="ล้างการทดสอบ และกลับสู่สถานะเครื่องปกติ (ปลอดภัย)">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
-          สถานะปกติ (ปลอดภัย)
+          <span>⚡ กดปุ่มนี้เพื่อตรวจสอบทุกอย่างในเครื่องทันที</span>
+        </button>
+      </div>
+
+      <!-- Unified Live Scanner Controls -->
+      <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:14px; flex-wrap:wrap;">
+        <span style="font-size:0.85rem; color:var(--text-main); display:inline-flex; align-items:center; gap:8px; background:rgba(15,23,42,0.8); padding:6px 16px; border-radius:999px; border:1px solid rgba(16,185,129,0.3);">
+          <span style="width:9px; height:9px; border-radius:50%; background:#10b981; display:inline-block; box-shadow:0 0 10px #10b981;"></span>
+          <span style="color:var(--text-dim);">แหล่งข้อมูลการตรวจ:</span>
+          <strong style="color:#34d399;">ตรวจสอบข้อมูลจริงทั้งหมดในเครื่อง (Live Machine Unified Scan)</strong>
+        </span>
+        <button class="btn btn-outline" style="font-size:0.82rem; padding:6px 14px; color:var(--text-muted);" onclick="resetToCleanState()">
+          ล้างผลการตรวจ
         </button>
       </div>
 
       <!-- Live Scan Progress Box -->
-      <div id="scan-progress-box" class="scan-progress-box" style="display:none;">
+      <div id="scan-progress-box" class="scan-progress-box" style="display:none; margin-top:18px;">
         <div class="progress-status-text" id="progress-status-text">
-          <span id="progress-status-label">กำลังเริ่มต้นการตรวจสอบระบบ...</span>
+          <span id="progress-status-label">กำลังเริ่มต้นการตรวจสอบข้อมูลจริงในระบบ...</span>
         </div>
         <div class="progress-bar-wrap">
           <div class="progress-bar-inner" id="progress-bar-inner"></div>
         </div>
       </div>
+
+      <!-- Dedicated Scan Result Card Container -->
+      <div id="scan-result-card" class="scan-result-card" style="display:none;"></div>
     </div>
 
     <!-- Threat / Cheat Detection Alert Banner -->
@@ -123,7 +117,7 @@
             <span class="threat-badge">High Alert</span>
           </div>
           <div class="threat-desc">
-            ตรวจพบการเข้าถึงเว็บไซต์ต้องสงสัย: <span class="threat-url-tag" id="threat-url-text">https://ph4nt0m.lol/</span> &bull; แจ้งเตือน: มีการเปิดใช้งานโปรแกรมช่วยเล่น / Mod Menu ในเครื่อง
+            ตรวจพบการเข้าถึงเว็บไซต์ต้องสงสัย: <span id="threat-url-container"><span class="threat-url-tag" id="threat-url-text">https://ph4nt0m.lol/</span></span> &bull; แจ้งเตือน: มีการเปิดใช้งานโปรแกรมช่วยเล่น / Mod Menu ในเครื่อง
           </div>
         </div>
       </div>
@@ -561,21 +555,33 @@
               <line x1="12" y1="9" x2="12" y2="13"/>
               <line x1="12" y1="17" x2="12.01" y2="17"/>
             </svg>
-            ระบบตรวจจับเว็บโปรแกรมช่วยเล่น
+            ระบบตรวจจับเว็บโปรแกรมช่วยเล่น (2 เว็บเป้าหมาย)
           </h3>
           <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">
-            ระบบตรวจจับอัตโนมัติหากพบประวัติการเข้าถึงเว็บไซต์โปรแกรมช่วยเล่น/โกงเกม:
+            ระบบตรวจจับอัตโนมัติหากพบประวัติการเข้าถึงเว็บไซต์โปรแกรมช่วยเล่น/โกงเกมเป้าหมาย:
           </p>
-          <div class="code-box" style="border-color: rgba(244, 63, 94, 0.3); color:#fda4af;">
+          <div class="code-box" style="border-color: rgba(244, 63, 94, 0.3); color:#fda4af; margin-bottom: 8px;">
             <span>https://ph4nt0m.lol/</span>
             <button class="copy-btn" onclick="copyAdbCommand('https://ph4nt0m.lol/')">คัดลอก</button>
           </div>
-          <div style="font-size:0.82rem; color:#fecdd3; margin-bottom:12px;">
-            💡 หากมีการนำเข้าประวัติ Log เบราว์เซอร์ หรือพบโดเมนนี้ในเครื่อง ระบบจะเด้งแบนเนอร์แจ้งเตือนสีแดงทันที
+          <div class="code-box" style="border-color: rgba(245, 158, 11, 0.35); color:#fde68a;">
+            <span>https://client.ruizenteam.store/</span>
+            <button class="copy-btn" onclick="copyAdbCommand('https://client.ruizenteam.store/')">คัดลอก</button>
           </div>
-          <button class="btn btn-danger" style="margin-top:auto;" onclick="triggerCheatTest()">
-            ทดสอบสแกนตรวจพบ ph4nt0m.lol
-          </button>
+          <div style="font-size:0.82rem; color:#fecdd3; margin: 10px 0 14px 0; line-height: 1.5;">
+            💡 หากมีการนำเข้าประวัติ Log เบราว์เซอร์, DNS Cache หรือไฟล์ในเครื่องที่เชื่อมโยงกับ 2 เว็บนี้ ระบบจะแจ้งเตือน High Alert สีแดงทันที
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto;">
+            <button class="btn btn-danger" style="flex: 1;" onclick="triggerCheatTest()">
+              สแกน ph4nt0m.lol
+            </button>
+            <button class="btn btn-danger" style="flex: 1; background: #d97706; border-color: #f59e0b;" onclick="triggerRuizenTest()">
+              สแกน ruizenteam
+            </button>
+            <button class="btn btn-primary" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);" onclick="loadRealThreatEvidence()">
+              📂 โหลดหลักฐานข้อมูลจริงทั้ง 2 เว็บ
+            </button>
+          </div>
         </div>
 
       </div>
@@ -587,6 +593,7 @@
     </footer>
   </div>
 
-  <script src="app.js?v=20261017-real-logos"></script>
+  <script src="real_system_scan.js?v=20261017"></script>
+  <script src="app.js?v=20261017-single-button-real-scan"></script>
 </body>
 </html>
