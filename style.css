@@ -1144,19 +1144,22 @@ footer {
 }
 
 .threat-detected-card {
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.85);
   border: 2px solid #f43f5e;
   border-radius: var(--radius-md);
-  padding: 18px 20px;
+  padding: 22px 20px;
   display: flex;
-  align-items: center;
-  gap: 18px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
 }
 
 .threat-detected-card:hover {
   transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
 .threat-detected-logo {
@@ -1291,6 +1294,181 @@ footer {
   color: #34d399;
   border-color: rgba(16, 185, 129, 0.4);
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+}
+
+/* ========================================================
+   Active Visitor Device Inspector Banner & Badges
+   ======================================================== */
+.visitor-device-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  color: #38bdf8;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.15);
+  letter-spacing: 0.2px;
+}
+
+.live-dot-blink {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+  box-shadow: 0 0 8px #10b981;
+  animation: liveBlink 1.4s infinite ease-in-out;
+}
+
+@keyframes liveBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.live-client-detector {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-md);
+  padding: 16px 22px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), inset 0 0 20px rgba(6, 182, 212, 0.08);
+}
+
+.detector-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.detector-pulsing-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+  transition: all 0.3s ease;
+}
+
+.detector-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detector-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detector-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: liveBlink 1.2s infinite ease-in-out;
+}
+
+.detector-label {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+}
+
+.detector-highlight {
+  font-size: 1.05rem;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+.badge-active-device {
+  background: #0284c7;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  letter-spacing: 0.8px;
+}
+
+.detector-detail-row {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detector-divider {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.detector-tag {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 1px 7px;
+  border-radius: 4px;
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+.detector-simulator-switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 15, 26, 0.75);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sim-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-right: 2px;
+}
+
+.btn-sim-device {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-dim);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-sim-device:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.btn-sim-device.active {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
 }
 
 /* Radar & Cyber Glow in Master Hero */
@@ -1430,3 +1608,209 @@ footer {
   border-color: #f43f5e;
 }
 
+/* =============================================================
+   Cyber Visual Effects & Rich Animation System
+   ============================================================= */
+
+/* 1. Fullscreen Interactive Cyber Matrix & Particle Canvas */
+.cyber-particles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* 2. Cyber HUD Telemetry Bar */
+.cyber-telemetry-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(10, 14, 23, 0.85);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.05);
+  backdrop-filter: blur(12px);
+  padding: 8px 18px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-telemetry-hud::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.25), transparent);
+  animation: hud-shimmer 4s infinite linear;
+}
+
+@keyframes hud-shimmer {
+  0% { left: -50%; }
+  100% { left: 150%; }
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.hud-dot.green {
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: hud-pulse 1.5s infinite alternate;
+}
+
+@keyframes hud-pulse {
+  from { opacity: 0.5; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1.2); }
+}
+
+.hud-divider {
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 300;
+}
+
+/* 3. Cyber Scanning Laser Beam */
+.scan-laser-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #06b6d4, #38bdf8, #fff, #38bdf8, #06b6d4, transparent);
+  box-shadow: 0 0 15px #06b6d4, 0 0 35px #38bdf8, 0 0 50px rgba(56, 189, 248, 0.8);
+  animation: laser-sweep 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 15;
+}
+
+@keyframes laser-sweep {
+  0% { top: 0%; opacity: 0.2; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 100%; opacity: 0.2; }
+}
+
+/* 4. Scanner Hero Futuristic Glowing Grid */
+.master-scanner-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.2);
+  background: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15) 0%, rgba(15, 23, 42, 0.85) 75%);
+}
+
+.master-scanner-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* 5. Master Scan Button Cyber Glow & Electric Pulsing Ring */
+.btn-master-scan {
+  position: relative;
+  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #7c3aed 100%) !important;
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.5), 0 0 50px rgba(124, 58, 237, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.btn-master-scan:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 40px rgba(14, 165, 233, 0.8), 0 0 80px rgba(124, 58, 237, 0.5) !important;
+}
+
+/* 6. Threat Card Cyber Aura & Danger Glow */
+.threat-detected-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.85) 0%, rgba(30, 27, 75, 0.6) 100%) !important;
+  border: 2px solid #f43f5e !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(244, 63, 94, 0.25) !important;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.threat-detected-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 40px rgba(244, 63, 94, 0.45) !important;
+}
+
+.threat-detected-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(45deg, #f43f5e, #f43f5e 10px, #111827 10px, #111827 20px);
+}
+
+/* 7. Clean Verification Card Emerald Glow */
+.scan-clean-card {
+  background: linear-gradient(145deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+  border: 2px solid #10b981 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(16, 185, 129, 0.3) !important;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* 8. Glowing Stat Counters */
+.stat-val {
+  font-family: 'Inter', -apple-system, sans-serif;
+  letter-spacing: -1px;
+  transition: all 0.4s ease;
+}
+
+/* 9. High-Tech Table Row Glow */
+.table-row-threat {
+  background: rgba(244, 63, 94, 0.12) !important;
+  border-left: 4px solid #f43f5e !important;
+}
+
+.table-row-threat:hover {
+  background: rgba(244, 63, 94, 0.22) !important;
+}
+
+/* 10. Shimmering Badge Glow */
+.threat-pulsing-badge {
+  background: #f43f5e;
+  color: #fff;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 15px #f43f5e;
+  animation: badge-pulse 1.4s infinite alternate;
+}
+
+@keyframes badge-pulse {
+  from { box-shadow: 0 0 10px #f43f5e; }
+  to { box-shadow: 0 0 25px #f43f5e, 0 0 40px rgba(244, 63, 94, 0.6); }
+}

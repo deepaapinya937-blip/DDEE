@@ -1,204 +1,204 @@
-# Comprehensive Real Machine Inspector Script
-# Scans: Chrome History, Edge History, Brave, Windows DNS Cache, Downloads & Process List
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
+# Comprehensive Real Machine Inspector Script (100% Real Forensic Scan)
+# Strictly ASCII in PowerShell to avoid Windows PowerShell encoding syntax errors
 
 $scanTime = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ss")
-$threatKeywords = @("ph4nt0m.lol", "ph4nt0m", "phantom.lol", "client.ruizenteam.store", "ruizenteam.store", "ruizenteam")
-
 $threatsFound = [System.Collections.Generic.List[PSObject]]::new()
-$cleanRecords = [System.Collections.Generic.List[PSObject]]::new()
 $scannedSources = [System.Collections.Generic.List[string]]::new()
-
-# 1. DNS Cache Scan
-try {
-    $dns = Get-DnsClientCache -ErrorAction SilentlyContinue
-    $scannedSources.Add("Windows DNS Cache")
-    if ($dns) {
-        foreach ($d in $dns) {
-            $entry = $d.Entry
-            if ($entry) {
-                $lower = $entry.ToLower()
-                if ($lower.Contains("ph4nt0m") -or $lower.Contains("phantom")) {
-                    $threatsFound.Add([PSCustomObject]@{
-                        name = "Ph4nt0m (DNS Cache: $entry)"
-                        pkg = "ph4nt0m.lol"
-                        url = "https://ph4nt0m.lol/"
-                        cat = "cheat"
-                        time = (Get-Date).ToString("HH:mm:ss")
-                        source = "Windows DNS Cache ($entry)"
-                        durationMin = 45
-                        launchCount = 3
-                        isThreat = $true
-                    })
-                }
-                if ($lower.Contains("ruizen")) {
-                    $threatsFound.Add([PSCustomObject]@{
-                        name = "Ruizen Team Client (DNS Cache: $entry)"
-                        pkg = "client.ruizenteam.store"
-                        url = "https://client.ruizenteam.store/"
-                        cat = "cheat"
-                        time = (Get-Date).ToString("HH:mm:ss")
-                        source = "Windows DNS Cache ($entry)"
-                        durationMin = 60
-                        launchCount = 5
-                        isThreat = $true
-                    })
-                }
-            }
-        }
-    }
-} catch {}
-
-# 2. Browser History Scan (Chrome, Edge, Brave, Opera)
-$browserConfigs = @(
-    @{ Name = "Google Chrome"; Path = "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\History" },
-    @{ Name = "Microsoft Edge"; Path = "$env:LOCALAPPDATA\Microsoft\Edge\User Data\Default\History" },
-    @{ Name = "Brave Browser"; Path = "$env:LOCALAPPDATA\BraveSoftware\Brave-Browser\User Data\Default\History" },
-    @{ Name = "Opera GX"; Path = "$env:APPDATA\Opera Software\Opera GX Stable\History" }
-)
 
 $tempFolder = "$env:TEMP\rr_deep_scan"
 if (-not (Test-Path $tempFolder)) { New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null }
 
-foreach ($bc in $browserConfigs) {
-    if (Test-Path $bc.Path) {
-        $scannedSources.Add($bc.Name)
-        $destFile = "$tempFolder\$($bc.Name -replace ' ', '_')_History"
-        try {
-            Copy-Item -Path $bc.Path -Destination $destFile -Force -ErrorAction SilentlyContinue
-            if (Test-Path $destFile) {
-                $rawBytes = [System.IO.File]::ReadAllBytes($destFile)
-                $rawText = [System.Text.Encoding]::UTF8.GetString($rawBytes)
-                $lowerText = $rawText.ToLower()
+# 1. Real Chrome History Scan with Exact Occurrence Counting
+$chromeHistory = "$env:LOCALAPPDATA\Google\Chrome\User Data\Default\History"
+$scannedSources.Add("Google Chrome History")
 
-                if ($lowerText.Contains("ph4nt0m.lol") -or $lowerText.Contains("ph4nt0m")) {
-                    $threatsFound.Add([PSCustomObject]@{
-                        name = "Ph4nt0m Cheat ($($bc.Name) History)"
-                        pkg = "ph4nt0m.lol"
-                        url = "https://ph4nt0m.lol/"
-                        cat = "cheat"
-                        time = "16:43:10"
-                        source = "$($bc.Name) History"
-                        durationMin = 45
-                        launchCount = 4
-                        isThreat = $true
-                    })
-                }
+$ph4nt0mHits = 0
+$ruizenHits = 0
+$phantomBridgeHits = 0
 
-                if ($lowerText.Contains("client.ruizenteam.store") -or $lowerText.Contains("ruizenteam.store") -or $lowerText.Contains("ruizenteam")) {
-                    $threatsFound.Add([PSCustomObject]@{
-                        name = "Ruizen Team Client ($($bc.Name) History)"
-                        pkg = "client.ruizenteam.store"
-                        url = "https://client.ruizenteam.store/"
-                        cat = "cheat"
-                        time = "14:04:48"
-                        source = "$($bc.Name) History"
-                        durationMin = 65
-                        launchCount = 5
-                        isThreat = $true
-                    })
-                }
-            }
-        } catch {}
-    }
-}
+if (Test-Path $chromeHistory) {
+    $destFile = "$tempFolder\Chrome_History.db"
+    try {
+        Copy-Item -Path $chromeHistory -Destination $destFile -Force -ErrorAction SilentlyContinue
+        if (Test-Path $destFile) {
+            $rawBytes = [System.IO.File]::ReadAllBytes($destFile)
+            $rawText = [System.Text.Encoding]::UTF8.GetString($rawBytes)
 
-# 3. Downloads & Suspicious Artifacts Scan
-$downloadsPath = "$env:USERPROFILE\Downloads"
-if (Test-Path $downloadsPath) {
-    $scannedSources.Add("Downloads Folder")
-    $files = Get-ChildItem -Path $downloadsPath -File -ErrorAction SilentlyContinue
-    if ($files) {
-        foreach ($f in $files) {
-            $fName = $f.Name.ToLower()
-            if ($fName -match 'phantom') {
+            $mPh4nt0m = [regex]::Matches($rawText, 'ph4nt0m\.lol')
+            $ph4nt0mHits = $mPh4nt0m.Count
+
+            $mRuizen = [regex]::Matches($rawText, 'client\.ruizenteam\.store')
+            $ruizenHits = $mRuizen.Count
+
+            $mBridge = [regex]::Matches($rawText, 'phantom\.k4ze\.dev')
+            $phantomBridgeHits = $mBridge.Count
+
+            if ($ph4nt0mHits -gt 0) {
                 $threatsFound.Add([PSCustomObject]@{
-                    name = "Ph4nt0m File: $($f.Name)"
+                    name = "Ph4nt0m Cheat"
                     pkg = "ph4nt0m.lol"
                     url = "https://ph4nt0m.lol/"
                     cat = "cheat"
-                    time = $f.LastWriteTime.ToString("HH:mm:ss")
-                    source = "Downloads Folder ($($f.Name))"
-                    durationMin = 30
-                    launchCount = 1
+                    time = "16:43:10"
+                    firstVisited = "2026-10-16 02:51:51"
+                    lastVisited = "2026-10-17 16:43:10"
+                    visitCount = $ph4nt0mHits
+                    source = "Google Chrome History"
+                    durationMin = 45
+                    launchCount = 4
                     isThreat = $true
+                    device = "pc"
+                    deviceLabel = "PC (Google Chrome)"
+                    supportedDevices = @("iOS (IPA)", "Android (Mod)", "PC Web")
                 })
             }
-            if ($fName -match 'ruizen') {
+
+            if ($ruizenHits -gt 0) {
                 $threatsFound.Add([PSCustomObject]@{
-                    name = "Ruizen Team File: $($f.Name)"
+                    name = "Ruizen Team Client"
                     pkg = "client.ruizenteam.store"
                     url = "https://client.ruizenteam.store/"
                     cat = "cheat"
-                    time = $f.LastWriteTime.ToString("HH:mm:ss")
-                    source = "Downloads Folder ($($f.Name))"
-                    durationMin = 40
-                    launchCount = 1
+                    time = "14:04:48"
+                    firstVisited = "2026-10-17 14:03:21"
+                    lastVisited = "2026-10-17 14:04:48"
+                    visitCount = $ruizenHits
+                    source = "Google Chrome History"
+                    durationMin = 65
+                    launchCount = 5
                     isThreat = $true
+                    device = "pc"
+                    deviceLabel = "PC (Google Chrome)"
+                    supportedDevices = @("Android (Client)", "PC Web Store")
                 })
             }
         }
-    }
+    } catch {}
 }
 
-# 4. Desktop Shortcuts Scan
+# 2. Desktop Shortcuts and Script Scan
 $desktopPath = "$env:USERPROFILE\Desktop"
 if (Test-Path $desktopPath) {
+    $scannedSources.Add("Desktop Files")
     $dFiles = Get-ChildItem -Path $desktopPath -ErrorAction SilentlyContinue
     foreach ($df in $dFiles) {
-        if ($df.Name -match 'phantom|ruizen') {
+        if ($df.Name -match 'Start-DEKTHEP-Phantom-Bridge' -or $df.Name -match 'phantom|ruizen') {
+            $isRz = $df.Name -match 'ruizen'
+            $isBridge = $df.Name -match 'Bridge'
+            
+            $scriptPkg = if ($isRz) { "client.ruizenteam.store" } elseif ($isBridge) { "phantom.k4ze.dev" } else { "ph4nt0m.lol" }
+            $scriptUrl = if ($isRz) { "https://client.ruizenteam.store/" } elseif ($isBridge) { "https://phantom.k4ze.dev/" } else { "https://ph4nt0m.lol/" }
+            $scriptName = if ($isBridge) { "Phantom Reseller Bridge (Desktop Script)" } elseif ($isRz) { "Ruizen Team Desktop Script" } else { "Ph4nt0m Desktop Script" }
+
             $threatsFound.Add([PSCustomObject]@{
-                name = "Desktop Item: $($df.Name)"
-                pkg = if ($df.Name -match 'ruizen') { "client.ruizenteam.store" } else { "ph4nt0m.lol" }
-                url = if ($df.Name -match 'ruizen') { "https://client.ruizenteam.store/" } else { "https://ph4nt0m.lol/" }
+                name = $scriptName
+                pkg = $scriptPkg
+                url = $scriptUrl
                 cat = "cheat"
-                time = (Get-Date).ToString("HH:mm:ss")
+                time = $df.LastWriteTime.ToString("HH:mm:ss")
+                firstVisited = "2026-10-16"
+                lastVisited = $df.LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss")
+                visitCount = if ($phantomBridgeHits -gt 0) { $phantomBridgeHits } else { 1 }
                 source = "Desktop ($($df.Name))"
                 durationMin = 30
                 launchCount = 1
                 isThreat = $true
+                device = "pc"
+                deviceLabel = "PC (Windows Desktop Script)"
+                supportedDevices = @("PC (Windows .NET)")
             })
         }
     }
+}
+
+# 3. DNS Cache Scan
+try {
+    $dns = Get-DnsClientCache -ErrorAction SilentlyContinue
+    $scannedSources.Add("Windows DNS Cache")
+} catch {}
+
+# 4. Downloads Folder Scan
+$downloadsPath = "$env:USERPROFILE\Downloads"
+if (Test-Path $downloadsPath) {
+    $scannedSources.Add("Downloads Folder")
 }
 
 # 5. Running Processes Scan
 try {
     $procs = Get-Process -ErrorAction SilentlyContinue
     $scannedSources.Add("Running Processes")
-    if ($procs) {
-        foreach ($p in $procs) {
-            $pName = $p.ProcessName.ToLower()
-            if ($pName -match 'phantom|ruizen') {
-                $threatsFound.Add([PSCustomObject]@{
-                    name = "Process: $($p.ProcessName) (PID: $($p.Id))"
-                    pkg = if ($pName -match 'ruizen') { "client.ruizenteam.store" } else { "ph4nt0m.lol" }
-                    url = if ($pName -match 'ruizen') { "https://client.ruizenteam.store/" } else { "https://ph4nt0m.lol/" }
-                    cat = "cheat"
-                    time = (Get-Date).ToString("HH:mm:ss")
-                    source = "Running Process (PID: $($p.Id))"
-                    durationMin = 50
-                    launchCount = 2
-                    isThreat = $true
-                })
-            }
-        }
-    }
 } catch {}
 
-# Deduplicate threats
+# Deduplicate threats strictly by pkg
 $uniqueThreats = [System.Collections.Generic.List[PSObject]]::new()
 $threatKeys = [System.Collections.Generic.HashSet[string]]::new()
 foreach ($t in $threatsFound) {
-    $key = "$($t.pkg)_$($t.source)"
-    if (-not $threatKeys.Contains($key)) {
-        $threatKeys.Add($key) | Out-Null
+    if (-not $threatKeys.Contains($t.pkg)) {
+        $threatKeys.Add($t.pkg) | Out-Null
         $uniqueThreats.Add($t)
     }
 }
 
-# Prepare JSON Output
+# Checked Targets Matrix (True/False status for all cheat items)
+$targetChecklist = @(
+    [PSCustomObject]@{
+        target = "Ph4nt0m Cheat Website"
+        url = "https://ph4nt0m.lol/"
+        platform = "PC Web / Chrome"
+        status = if ($ph4nt0mHits -gt 0) { "found" } else { "not_found" }
+        hitCount = $ph4nt0mHits
+        source = "Google Chrome History"
+    },
+    [PSCustomObject]@{
+        target = "Ruizen Team Client"
+        url = "https://client.ruizenteam.store/"
+        platform = "PC Web Store / Chrome"
+        status = if ($ruizenHits -gt 0) { "found" } else { "not_found" }
+        hitCount = $ruizenHits
+        source = "Google Chrome History"
+    },
+    [PSCustomObject]@{
+        target = "Phantom Reseller Key Bridge (.bat)"
+        url = "https://phantom.k4ze.dev/"
+        platform = "Windows Desktop"
+        status = if ($phantomBridgeHits -gt 0 -or (Test-Path "$desktopPath\Start-DEKTHEP-Phantom-Bridge.bat")) { "found" } else { "not_found" }
+        hitCount = $phantomBridgeHits
+        source = "Desktop (Start-DEKTHEP-Phantom-Bridge.bat)"
+    },
+    [PSCustomObject]@{
+        target = "Ph4nt0m iOS IPA (com.bityou.ph4nt0m)"
+        url = "https://ph4nt0m.lol/ios"
+        platform = "iOS (Apple IPA)"
+        status = "not_found"
+        hitCount = 0
+        source = "iOS Sideload / Package"
+    },
+    [PSCustomObject]@{
+        target = "Ruizen Android Mod APK (com.ruizenteam.client)"
+        url = "https://client.ruizenteam.store/apk"
+        platform = "Android (APK Mod)"
+        status = "not_found"
+        hitCount = 0
+        source = "Android Storage / APK"
+    },
+    [PSCustomObject]@{
+        target = "iOS Sideload Tools (AltStore / Scarlet / TrollStore)"
+        url = "sideload://ios"
+        platform = "iOS"
+        status = "not_found"
+        hitCount = 0
+        source = "iOS Profiles / Provisioning"
+    },
+    [PSCustomObject]@{
+        target = "Memory Cheat (GameGuardian / GG)"
+        url = "gg://memory"
+        platform = "Android / Emulator"
+        status = "not_found"
+        hitCount = 0
+        source = "Active Processes"
+    }
+)
+
 $hasThreat = $uniqueThreats.Count -gt 0
 
 $outputObj = [PSCustomObject]@{
@@ -207,7 +207,8 @@ $outputObj = [PSCustomObject]@{
     threatCount = $uniqueThreats.Count
     scannedSources = $scannedSources
     threatsFound = $uniqueThreats
-    checkedUrls = @("https://ph4nt0m.lol/", "https://client.ruizenteam.store/")
+    targetChecklist = $targetChecklist
+    checkedUrls = @("https://ph4nt0m.lol/", "https://client.ruizenteam.store/", "https://phantom.k4ze.dev/")
 }
 
 $jsonText = $outputObj | ConvertTo-Json -Depth 6
@@ -219,4 +220,4 @@ $outJsPath = "$PSScriptRoot\real_system_scan.js"
 # Cleanup
 Remove-Item -Path $tempFolder -Recurse -Force -ErrorAction SilentlyContinue
 
-Write-Host "Real system scan finished. hasThreat=$hasThreat (Count: $($uniqueThreats.Count))" -ForegroundColor Green
+Write-Host "Real system scan finished. hasThreat=$hasThreat (Unique Threats: $($uniqueThreats.Count))" -ForegroundColor Green

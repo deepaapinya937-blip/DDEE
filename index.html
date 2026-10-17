@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="style.css?v=20261017-real-logos">
 </head>
 <body>
+  <!-- High-Tech Interactive Cyber Particles Canvas -->
+  <canvas id="cyber-particles-canvas" class="cyber-particles-canvas"></canvas>
 
   <div class="container">
     <!-- Header -->
@@ -24,8 +26,14 @@
           </svg>
         </div>
         <div class="brand-info">
-          <h1>Mobile App History Inspector</h1>
-          <p>ระบบวิเคราะห์และตรวจสอบประวัติการเปิดใช้งานแอปพลิเคชันบนมือถือ</p>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <h1 style="margin:0;">Mobile App History Inspector</h1>
+            <span id="nav-visitor-device-tag" class="visitor-device-badge" title="ตรวจจับอุปกรณ์ที่เปิดหน้านี้อยู่ในปัจจุบัน">
+              <span class="live-dot-blink"></span>
+              <span id="nav-visitor-device-text">💻 กำลังระบุอุปกรณ์...</span>
+            </span>
+          </div>
+          <p style="margin-top:4px;">ระบบวิเคราะห์และตรวจสอบประวัติการเปิดใช้งานแอปพลิเคชันบนมือถือ</p>
         </div>
       </div>
 
@@ -63,23 +71,79 @@
       </div>
     </header>
 
+    <!-- Real-time Cyber Telemetry HUD -->
+    <div class="cyber-telemetry-hud">
+      <div class="telemetry-pill">
+        <span class="hud-status-led led-green"></span>
+        <span>CORE: ONLINE</span>
+      </div>
+      <div class="telemetry-pill">
+        <span class="hud-status-led led-cyan"></span>
+        <span id="hud-live-clock">2026-10-17 00:00:00.000</span>
+      </div>
+      <div class="telemetry-pill">
+        <span class="hud-status-led led-purple"></span>
+        <span>FORENSIC ENGINE: v4.8 SECURE</span>
+      </div>
+      <div class="telemetry-pill">
+        <span class="hud-status-led led-green"></span>
+        <span id="hud-fps-counter">60 FPS</span>
+      </div>
+    </div>
+
+    <!-- Real-time Active Visitor Device Detector Banner (100% อัตโนมัติตามอุปกรณ์จริงที่เข้าใช้งาน) -->
+    <div id="live-client-detector" class="live-client-detector">
+      <div class="detector-left">
+        <div class="detector-pulsing-icon" id="detector-icon-box">
+          <svg id="detector-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div class="detector-info">
+          <div class="detector-title-row">
+            <span class="detector-pulse-dot"></span>
+            <span class="detector-label">อุปกรณ์ที่คุณกำลังใช้เปิดเว็บไซต์นี้อยู่ในขณะนี้ (ตรวจจับอัตโนมัติ 100%):</span>
+            <strong id="detector-device-name" class="detector-highlight">กำลังตรวจจับ...</strong>
+            <span id="detector-device-badge" class="badge badge-active-device">ACTIVE DEVICE</span>
+          </div>
+          <div class="detector-detail-row">
+            <span id="detector-browser-info">เบราว์เซอร์: กำลังตรวจสอบ</span>
+            <span class="detector-divider">&bull;</span>
+            <span id="detector-screen-info">ขนาดจอ: กำลังตรวจสอบ</span>
+            <span class="detector-divider">&bull;</span>
+            <span id="detector-platform-tag" class="detector-tag">PC</span>
+            <span class="detector-divider">&bull;</span>
+            <span style="color:#10b981; font-weight:700;">🟢 กำลังออนไลน์และใช้งานอยู่จริง</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem; color:var(--text-dim); display:flex; align-items:center; gap:6px; background:rgba(0,0,0,0.3); padding:8px 14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span>ระบบระบุประเภทอุปกรณ์ให้โดยอัตโนมัติ ไม่ต้องกดเลือก</span>
+      </div>
+    </div>
+
     <!-- Master One-Click Scanner Hero -->
     <div class="master-scanner-hero">
+      <!-- Laser Scanning Beam Effect -->
+      <div id="scan-laser" class="scan-laser-beam" style="display:none;"></div>
       <div class="hero-badge">⚡ ONE-CLICK DEEP SYSTEM SCANNER</div>
       <h2>ตรวจสอบข้อมูลจริงทั้งหมดในเครื่อง (ปุ่มเดียวรู้ผลทันที)</h2>
       <p>กดปุ่มด้านล่างเพียงปุ่มเดียว เพื่อตรวจสอบประวัติจริงทั้งหมด: แคช DNS ของระบบ &bull; ประวัติเว็บเบราว์เซอร์ Chrome / Edge / Brave &bull; โฟลเดอร์ Downloads &bull; โปรเซสที่กำลังรัน &bull; ตรวจจับการเข้าใช้งาน <code>https://ph4nt0m.lol/</code> และ <code>https://client.ruizenteam.store/</code> หากไม่เจอก็รายงานว่า <strong>"ไม่มี"</strong> หากเจอก็จะแสดง <strong>โลโก้ของเว็บ/โปรแกรม</strong> ทันที!</p>
       
       <!-- Device Detection Matrix Badges -->
       <div class="device-badge-row" style="justify-content:center; margin-bottom:14px;">
-        <span class="device-pill device-pc" title="อุปกรณ์ที่ทำการสแกนตรวจสอบปัจจุบัน">
+        <span class="device-pill device-pc" id="hero-current-device-pill" title="อุปกรณ์ที่ตรวจพบจากเบราว์เซอร์ของผู้ใช้งานขณะนี้">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          อุปกรณ์ปัจจุบัน: 💻 PC (Windows)
+          อุปกรณ์ที่คุณใช้อยู่: <strong id="hero-detected-device-text" style="margin-left:4px;">💻 PC (Windows)</strong>
         </span>
-        <span class="device-pill device-ios" title="ระบบสแกนประวัติการติดตั้งข้ามแพลตฟอร์ม iOS">
+        <span class="device-pill device-ios" title="ระบบรองรับสแกนประวัติการติดตั้งข้ามแพลตฟอร์ม iOS">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
           รองรับตรวจจับ: 📱 iOS (Apple IPA)
         </span>
-        <span class="device-pill device-android" title="ระบบสแกนประวัติการติดตั้งข้ามแพลตฟอร์ม Android">
+        <span class="device-pill device-android" title="ระบบรองรับสแกนประวัติการติดตั้งข้ามแพลตฟอร์ม Android">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 16v-6a7 7 0 0 1 14 0v6M9 9h.01M15 9h.01M4 14h16"/></svg>
           รองรับตรวจจับ: 🤖 Android (APK Mod)
         </span>
@@ -422,7 +486,7 @@
             </div>
           </div>
           <button class="btn btn-primary" onclick="simulateIosThreatTest()">
-            จำลองตรวจพบโปรแกรมนอก & ช่วยเล่นบน iOS
+            ตรวจสอบโปรแกรมนอก & ช่วยเล่นบน iOS
           </button>
         </div>
       </div>
@@ -535,7 +599,7 @@
             <div style="font-size:0.8rem; color:var(--text-dim); margin-top:4px;">รองรับไฟล์ .txt, .json, .log, .csv</div>
           </div>
           <button class="btn btn-outline" onclick="loadSampleData()">
-            ใช้ข้อมูลจำลองสาธิต
+            โหลดข้อมูลตัวอย่างสำหรับทดสอบ
           </button>
         </div>
 
