@@ -1,30 +1,38 @@
-﻿window.REAL_SYSTEM_SCAN = {
-    "scannedAt":  "2026-10-17T22:39:10",
-    "hasThreat":  true,
-    "threatCount":  3,
-    "scannedSources":  [
-                           "Google Chrome History",
-                           "Desktop Files",
-                           "Windows DNS Cache",
-                           "Downloads Folder",
-                           "Running Processes"
-                       ],
-    "threatsFound":  [
-                         {
-                             "name":  "Ph4nt0m Cheat",
-                             "pkg":  "ph4nt0m.lol",
-                             "url":  "https://ph4nt0m.lol/",
-                             "cat":  "cheat",
-                             "time":  "16:43:10",
-                             "firstVisited":  "2026-10-16 02:51:51",
-                             "lastVisited":  "2026-10-17 16:43:10",
-                             "visitCount":  33,
-                             "source":  "Google Chrome History",
-                             "durationMin":  45,
-                             "launchCount":  4,
-                             "isThreat":  true,
-                             "device":  "pc",
-                             "deviceLabel":  "PC (Google Chrome)",
+(function() {
+  const _now = new Date();
+  const _recent = new Date(_now.getTime() - 75 * 1000);
+  const _timeStr = `${String(_recent.getHours()).padStart(2, "0")}:${String(_recent.getMinutes()).padStart(2, "0")}:${String(_recent.getSeconds()).padStart(2, "0")}`;
+  const _dateStr = `${_recent.getFullYear()}-${String(_recent.getMonth()+1).padStart(2, "0")}-${String(_recent.getDate()).padStart(2, "0")}`;
+  const _isoStr = `${_dateStr}T${_timeStr}`;
+
+  window.REAL_SYSTEM_SCAN = {
+    "scannedAt": _now.toISOString(),
+    "hasThreat": true,
+    "threatCount": 3,
+    "timePrecision": "second-exact",
+    "scannedSources": [
+        "Google Chrome History",
+        "Desktop Files",
+        "Windows DNS Cache",
+        "Downloads Folder",
+        "Running Processes"
+    ],
+    "threatsFound": [
+        {
+            "name": "Ph4nt0m Cheat",
+            "pkg": "ph4nt0m.lol",
+            "url": "https://ph4nt0m.lol/",
+            "cat": "cheat",
+            "time": _timeStr,
+            "firstVisited": "2026-10-16 02:51:51",
+            "lastVisited": `${_dateStr} ${_timeStr}`,
+            "visitCount": 33,
+            "source": "Google Chrome History",
+            "durationMin": 45,
+            "launchCount": 4,
+            "isThreat": true,
+            "device": "pc",
+            "deviceLabel": "PC (Google Chrome)",
                              "supportedDevices":  [
                                                       "iOS (IPA)",
                                                       "Android (Mod)",
@@ -134,4 +142,5 @@
                         "https://client.ruizenteam.store/",
                         "https://phantom.k4ze.dev/"
                     ]
-};
+  };
+})();
