@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="tinder-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FD297B"/>
+      <stop offset="100%" stop-color="#FF655B"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="22" fill="url(#tinder-grad)"/>
+  <path d="M53 20c1 13-6 19-11 27-6 10-8 17-2 27 5 9 16 11 23 7 11-6 14-19 9-29-3-6-8-10-9-17 10 4 20 15 21 27 2 17-10 32-27 33-17 1-32-12-32-29 0-11 6-21 14-27 6-5 11-13 14-22z" fill="#FFFFFF"/>
+</svg>

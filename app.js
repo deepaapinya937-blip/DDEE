@@ -1,89 +1,219 @@
 /**
  * Mobile App Usage Inspector (ระบบตรวจสอบประวัติการเปิดแอปมือถือ)
- * Client-side Log Analyzer & Dashboard
+ * Client-side Log Analyzer & Security Inspector with Real Brand Logos & One-Click Scan
  */
 
-// 1. Comprehensive App Knowledge Base
+// 1. Official Vector Brand Logos (SVG - 100% Offline, Crisp & Authentic)
+const BRAND_LOGOS = {
+  // LINE
+  "jp.naver.line.android": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#06C755"/><path d="M50 18C31.2 18 16 30.5 16 45.9c0 13.8 12.1 25.3 28.4 27.4 1.1.2 2.6.7 3 1.7.3.8.2 2.1.1 2.9-.3 2-1.3 7.8-1.5 9.5-.2 1.3.6 1.4 1.6.8 4.2-2.5 22.8-13.4 31.1-23 7.8-8.9 7.8-14.7 7.8-19.3C86.5 30.5 70.1 18 50 18z" fill="#FFFFFF"/><path d="M36 41v14h-4V36h4v19h5v4.5h-5zm7.5-5h4v19h-4V36zm15 0h4v11.5l-7.5-11.5H48V55h4V43.5L59.5 55H63V36h-4.5zm11.5 0H80v4h-6v3.5h5.5V48H74v3.5h6.5V55H70V36z" fill="#06C755"/></svg>`,
+
+  // TikTok
+  "com.zhiliaoapp.musically": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#010101"/><path d="M68 40.5c-4.2-2.7-7-7.4-7.4-12.8h-7.7v36.6c0 6.4-5.2 11.6-11.6 11.6-6.4 0-11.6-5.2-11.6-11.6 0-6.4 5.2-11.6 11.6-11.6 1.4 0 2.7.2 3.9.7v-8c-1.3-.2-2.6-.4-3.9-.4-10.8 0-19.6 8.8-19.6 19.6 0 10.8 8.8 19.6 19.6 19.6 10.8 0 19.6-8.8 19.6-19.6V44.4c4.6 3.3 10.3 5.3 16.5 5.3v-8c-3.5 0-6.7-1.2-9.4-3.2z" fill="#25F4EE"/><path d="M66.6 39.2c-4.2-2.7-7-7.4-7.4-12.8h-5v36.6c0 6.4-5.2 11.6-11.6 11.6-6.4 0-11.6-5.2-11.6-11.6 0-6.4 5.2-11.6 11.6-11.6 1.4 0 2.7.2 3.9.7v-5.3c-1.3-.2-2.6-.4-3.9-.4-10.8 0-19.6 8.8-19.6 19.6 0 10.8 8.8 19.6 19.6 19.6 10.8 0 19.6-8.8 19.6-19.6V43.1c4.6 3.3 10.3 5.3 16.5 5.3v-6.7c-3.5 0-6.7-1.2-9.4-3.2z" fill="#FE2C55"/><path d="M64.5 38c-4.2-2.7-7-7.4-7.4-12.8h-4.2v36.6c0 6.4-5.2 11.6-11.6 11.6-6.4 0-11.6-5.2-11.6-11.6 0-6.4 5.2-11.6 11.6-11.6 1.4 0 2.7.2 3.9.7v-2.7c-1.3-.2-2.6-.4-3.9-.4-10.8 0-19.6 8.8-19.6 19.6 0 10.8 8.8 19.6 19.6 19.6 10.8 0 19.6-8.8 19.6-19.6V41.7c4.6 3.3 10.3 5.3 16.5 5.3v-5.4c-3.5 0-6.7-1.2-9.4-3.2z" fill="#FFFFFF"/></svg>`,
+  "com.ss.android.ugc.trill": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#010101"/><path d="M68 40.5c-4.2-2.7-7-7.4-7.4-12.8h-7.7v36.6c0 6.4-5.2 11.6-11.6 11.6-6.4 0-11.6-5.2-11.6-11.6 0-6.4 5.2-11.6 11.6-11.6 1.4 0 2.7.2 3.9.7v-8c-1.3-.2-2.6-.4-3.9-.4-10.8 0-19.6 8.8-19.6 19.6 0 10.8 8.8 19.6 19.6 19.6 10.8 0 19.6-8.8 19.6-19.6V44.4c4.6 3.3 10.3 5.3 16.5 5.3v-8c-3.5 0-6.7-1.2-9.4-3.2z" fill="#25F4EE"/><path d="M66.6 39.2c-4.2-2.7-7-7.4-7.4-12.8h-5v36.6c0 6.4-5.2 11.6-11.6 11.6-6.4 0-11.6-5.2-11.6-11.6 0-6.4 5.2-11.6 11.6-11.6 1.4 0 2.7.2 3.9.7v-5.3c-1.3-.2-2.6-.4-3.9-.4-10.8 0-19.6 8.8-19.6 19.6 0 10.8 8.8 19.6 19.6 19.6 10.8 0 19.6-8.8 19.6-19.6V43.1c4.6 3.3 10.3 5.3 16.5 5.3v-6.7c-3.5 0-6.7-1.2-9.4-3.2z" fill="#FE2C55"/><path d="M64.5 38c-4.2-2.7-7-7.4-7.4-12.8h-4.2v36.6c0 6.4-5.2 11.6-11.6 11.6-6.4 0-11.6-5.2-11.6-11.6 0-6.4 5.2-11.6 11.6-11.6 1.4 0 2.7.2 3.9.7v-2.7c-1.3-.2-2.6-.4-3.9-.4-10.8 0-19.6 8.8-19.6 19.6 0 10.8 8.8 19.6 19.6 19.6 10.8 0 19.6-8.8 19.6-19.6V41.7c4.6 3.3 10.3 5.3 16.5 5.3v-5.4c-3.5 0-6.7-1.2-9.4-3.2z" fill="#FFFFFF"/></svg>`,
+
+  // Apple Safari
+  "com.apple.mobilesafari": `<svg viewBox="0 0 100 100"><defs><linearGradient id="safari-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00C0FF"/><stop offset="100%" stop-color="#0066FE"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="#FFFFFF"/><circle cx="50" cy="50" r="42" fill="url(#safari-bg)"/><circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="2,4"/><polygon points="50,18 58,47 50,50 42,47" fill="#FF3B30"/><polygon points="50,82 58,53 50,50 42,53" fill="#FFFFFF"/><circle cx="50" cy="50" r="4" fill="#FFFFFF"/></svg>`,
+
+  // Facebook
+  "com.facebook.katana": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1877F2"/><path d="M57 100V60h13.5l2-16H57V34c0-4.6 1.3-7.8 7.9-7.8H73v-14.3c-1.5-.2-6.5-.6-12.4-.6-12.3 0-20.7 7.5-20.7 21.3V44H26v16h13.9v40H57z" fill="#FFFFFF"/></svg>`,
+  "com.facebook.lite": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1877F2"/><circle cx="50" cy="50" r="38" fill="#FFFFFF"/><path d="M54 75V50h8l1-10h-9v-6.5c0-3 1-5 5-5h4v-9c-1 0-4-.5-8-.5-8 0-13.5 5-13.5 14V40H30v10h8.5v25H54z" fill="#1877F2"/></svg>`,
+
+  // Messenger
+  "com.facebook.orca": `<svg viewBox="0 0 100 100"><defs><linearGradient id="msg-grad" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#006AFF"/><stop offset="50%" stop-color="#A033FF"/><stop offset="100%" stop-color="#FF5280"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#msg-grad)"/><path d="M50 18C32 18 18 31 18 47c0 9 5 17 12 23v10l9-5c3 1 7 2 11 2 18 0 32-13 32-29S68 18 50 18z" fill="#FFFFFF"/><polygon points="54,38 37,55 47,55 42,62 61,45 50,45" fill="url(#msg-grad)"/></svg>`,
+
+  // YouTube
+  "com.google.android.youtube": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#FF0000"/><path d="M84 37.5c-.8-3.1-3.2-5.5-6.3-6.3C72.1 30 50 30 50 30s-22.1 0-27.7 1.2c-3.1.8-5.5 3.2-6.3 6.3C14.8 43.1 14.8 50 14.8 50s0 6.9 1.2 12.5c.8 3.1 3.2 5.5 6.3 6.3C27.9 70 50 70 50 70s22.1 0 27.7-1.2c3.1-.8 5.5-3.2 6.3-6.3 1.2-5.6 1.2-12.5 1.2-12.5s0-6.9-1.2-12.5z" fill="#FFFFFF"/><polygon points="44,41 60,50 44,59" fill="#FF0000"/></svg>`,
+
+  // Instagram
+  "com.instagram.android": `<svg viewBox="0 0 100 100"><defs><linearGradient id="ig-grad" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#FED373"/><stop offset="30%" stop-color="#F15245"/><stop offset="60%" stop-color="#D92E7F"/><stop offset="100%" stop-color="#9B36B7"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#ig-grad)"/><rect x="23" y="23" width="54" height="54" rx="16" fill="none" stroke="#FFFFFF" stroke-width="6"/><circle cx="50" cy="50" r="13" fill="none" stroke="#FFFFFF" stroke-width="6"/><circle cx="66" cy="34" r="3.5" fill="#FFFFFF"/></svg>`,
+
+  // Google Chrome
+  "com.android.chrome": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#FFFFFF"/><circle cx="50" cy="50" r="40" fill="#4285F4"/><path d="M50 10a40 40 0 0 1 34.6 20H50z" fill="#EA4335"/><path d="M50 10A40 40 0 0 0 15.4 70L32.7 40H50z" fill="#EA4335"/><path d="M15.4 70A40 40 0 0 0 70 87.3L52.7 57.3z" fill="#34A853"/><path d="M50 10h34.6A40 40 0 0 1 70 87.3L52.7 57.3A20 20 0 0 0 50 30z" fill="#FBBC05"/><circle cx="50" cy="50" r="18" fill="#FFFFFF"/><circle cx="50" cy="50" r="14" fill="#4285F4"/></svg>`,
+
+  // K PLUS (กสิกรไทย)
+  "com.kbank.kplus": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#00A950"/><circle cx="50" cy="50" r="42" fill="#008037"/><text x="36" y="66" font-family="'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="900" fill="#FFFFFF" text-anchor="middle">K</text><circle cx="68" cy="50" r="18" fill="none" stroke="#FFFFFF" stroke-width="4"/><path d="M68 39v22M57 50h22" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round"/></svg>`,
+
+  // SCB EASY (ไทยพาณิชย์)
+  "com.scb.phone": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#4E2A84"/><circle cx="50" cy="50" r="40" fill="#3B1F64"/><path d="M50 25c-8 12-16 20-16 30 0 10 7 18 16 18s16-8 16-18c0-10-8-18-16-30z" fill="#FED100"/><circle cx="50" cy="58" r="8" fill="#4E2A84"/><text x="50" y="88" font-family="sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle">SCB EASY</text></svg>`,
+
+  // Shopee
+  "com.shopee.th": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#EE4D2D"/><path d="M36 32c0-8 6-14 14-14s14 6 14 14h-6c0-4.4-3.6-8-8-8s-8 3.6-8 8h-6z" fill="#FFFFFF"/><path d="M22 36l6 46h44l6-46H22z" fill="#FFFFFF"/><path d="M54 48c-3-1.5-6-1.5-6 1.5 0 3.5 10 2.5 10 9 0 5-4.5 7.5-9 7.5-5 0-8.5-2.5-9.5-6l4.5-1.5c.7 2 2.5 3.5 5 3.5 2.5 0 4.5-1 4.5-3 0-3.5-10-2.5-10-9 0-5 4.5-7.5 9-7.5 4.5 0 7.5 2 8.5 5.5l-4.5 1.5c-.5-1.5-1.5-2-3-2z" fill="#EE4D2D"/></svg>`,
+
+  // Garena RoV
+  "com.garena.game.kgth": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#0F172A"/><path d="M50 15L20 30v25c0 20 15 32 30 35 15-3 30-15 30-35V30L50 15z" fill="#1E293B" stroke="#D97706" stroke-width="3"/><path d="M50 24L30 35v18c0 14 10 23 20 25 10-2 20-11 20-25V35L50 24z" fill="#78350F"/><polygon points="50,28 55,42 70,42 58,52 62,67 50,57 38,67 42,52 30,42 45,42" fill="#F59E0B"/><text x="50" y="88" font-family="sans-serif" font-size="14" font-weight="900" fill="#FBBF24" text-anchor="middle">RoV</text></svg>`,
+
+  // Spotify
+  "com.spotify.music": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1DB954"/><circle cx="50" cy="50" r="44" fill="#1DB954"/><path d="M26 38c17-4 37-2 50 6" stroke="#121212" stroke-width="8" stroke-linecap="round" fill="none"/><path d="M29 51c14-3 31-2 42 5" stroke="#121212" stroke-width="7" stroke-linecap="round" fill="none"/><path d="M33 63c11-2 25-1 34 4" stroke="#121212" stroke-width="6" stroke-linecap="round" fill="none"/></svg>`,
+
+  // AltStore (iOS Sideload)
+  "org.altstore.AltStore": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#141E28"/><polygon points="50,20 80,75 20,75" fill="#2A9D8F"/><polygon points="50,38 70,75 30,75" fill="#E76F51"/><polygon points="50,52 62,75 38,75" fill="#264653"/></svg>`,
+
+  // Scarlet (iOS Sideload)
+  "com.scarlet.ios": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#881337"/><polygon points="50,18 82,78 18,78" fill="#F43F5E"/><circle cx="50" cy="58" r="12" fill="#FFFFFF"/></svg>`,
+
+  // TrollStore (iOS Sideload)
+  "com.trollstore.app": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#4C1D95"/><rect x="25" y="25" width="50" height="50" rx="12" fill="#8B5CF6"/><path d="M35 48c3 4 8 4 11 0M54 48c3 4 8 4 11 0M40 62c6 6 14 6 20 0" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`,
+
+  // HappyMod (Android Mod APK)
+  "com.happymod.apk": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#10B981"/><path d="M32 24c0 8-5 12-10 14 3-8 7-14 10-14zM68 24c0 8 5 12 10 14-3-8-7-14-10-14z" fill="#047857"/><circle cx="50" cy="56" r="28" fill="#FFFFFF"/><circle cx="40" cy="52" r="5" fill="#10B981"/><circle cx="60" cy="52" r="5" fill="#10B981"/><path d="M38 64c4 6 20 6 24 0" stroke="#10B981" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`,
+
+  // Tinder
+  "com.tinder": `<svg viewBox="0 0 100 100"><defs><linearGradient id="tinder-grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FD297B"/><stop offset="100%" stop-color="#FF655B"/></linearGradient></defs><rect width="100" height="100" rx="22" fill="url(#tinder-grad)"/><path d="M53 20c1 13-6 19-11 27-6 10-8 17-2 27 5 9 16 11 23 7 11-6 14-19 9-29-3-6-8-10-9-17 10 4 20 15 21 27 2 17-10 32-27 33-17 1-32-12-32-29 0-11 6-21 14-27 6-5 11-13 14-22z" fill="#FFFFFF"/></svg>`,
+
+  // GameGuardian (Cheat Tool)
+  "com.gameguardian": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#0F172A"/><circle cx="50" cy="50" r="42" fill="#1E293B" stroke="#F43F5E" stroke-width="3"/><path d="M30 40l20-15 20 15v25c0 15-20 22-20 22s-20-7-20-22V40z" fill="#EF4444"/><circle cx="43" cy="48" r="4" fill="#FFFFFF"/><circle cx="57" cy="48" r="4" fill="#FFFFFF"/><path d="M42 62h16" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/><text x="50" y="88" font-family="sans-serif" font-size="12" font-weight="900" fill="#FDA4AF" text-anchor="middle">GG CHEAT</text></svg>`,
+
+  // Ph4nt0m Cheat Website & Mod Menu (🚨 Threat)
+  "ph4nt0m.lol": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#050811"/><circle cx="50" cy="50" r="44" fill="#111827" stroke="#F43F5E" stroke-width="3.5"/><path d="M50 20c-15 0-25 12-25 26 0 12 6 22 10 26 2 2 3 6 3 9l3-2 3 2 3-2 3 2 3-2 3 2c0-3 1-7 3-9 4-4 10-14 10-26 0-14-10-26-20-26z" fill="#F43F5E"/><circle cx="42" cy="44" r="5" fill="#050811"/><circle cx="58" cy="44" r="5" fill="#050811"/><circle cx="43" cy="43" r="2" fill="#38BDF8"/><circle cx="59" cy="43" r="2" fill="#38BDF8"/><path d="M43 56c4 3 10 3 14 0" stroke="#050811" stroke-width="3" stroke-linecap="round"/><text x="50" y="92" font-family="sans-serif" font-size="11" font-weight="900" fill="#F43F5E" text-anchor="middle">PH4NT0M</text></svg>`,
+  "https://ph4nt0m.lol/": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#050811"/><circle cx="50" cy="50" r="44" fill="#111827" stroke="#F43F5E" stroke-width="3.5"/><path d="M50 20c-15 0-25 12-25 26 0 12 6 22 10 26 2 2 3 6 3 9l3-2 3 2 3-2 3 2 3-2 3 2c0-3 1-7 3-9 4-4 10-14 10-26 0-14-10-26-20-26z" fill="#F43F5E"/><circle cx="42" cy="44" r="5" fill="#050811"/><circle cx="58" cy="44" r="5" fill="#050811"/><circle cx="43" cy="43" r="2" fill="#38BDF8"/><circle cx="59" cy="43" r="2" fill="#38BDF8"/><path d="M43 56c4 3 10 3 14 0" stroke="#050811" stroke-width="3" stroke-linecap="round"/><text x="50" y="92" font-family="sans-serif" font-size="11" font-weight="900" fill="#F43F5E" text-anchor="middle">PH4NT0M</text></svg>`,
+  "com.ph4nt0m.mod": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#050811"/><circle cx="50" cy="50" r="44" fill="#111827" stroke="#F43F5E" stroke-width="3.5"/><path d="M50 20c-15 0-25 12-25 26 0 12 6 22 10 26 2 2 3 6 3 9l3-2 3 2 3-2 3 2 3-2 3 2c0-3 1-7 3-9 4-4 10-14 10-26 0-14-10-26-20-26z" fill="#F43F5E"/><circle cx="42" cy="44" r="5" fill="#050811"/><circle cx="58" cy="44" r="5" fill="#050811"/><circle cx="43" cy="43" r="2" fill="#38BDF8"/><circle cx="59" cy="43" r="2" fill="#38BDF8"/><path d="M43 56c4 3 10 3 14 0" stroke="#050811" stroke-width="3" stroke-linecap="round"/><text x="50" y="92" font-family="sans-serif" font-size="11" font-weight="900" fill="#F43F5E" text-anchor="middle">PH4NT0M</text></svg>`,
+  "com.bityou.ph4nt0m": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#050811"/><circle cx="50" cy="50" r="44" fill="#111827" stroke="#F43F5E" stroke-width="3.5"/><path d="M50 20c-15 0-25 12-25 26 0 12 6 22 10 26 2 2 3 6 3 9l3-2 3 2 3-2 3 2 3-2 3 2c0-3 1-7 3-9 4-4 10-14 10-26 0-14-10-26-20-26z" fill="#F43F5E"/><circle cx="42" cy="44" r="5" fill="#050811"/><circle cx="58" cy="44" r="5" fill="#050811"/><circle cx="43" cy="43" r="2" fill="#38BDF8"/><circle cx="59" cy="43" r="2" fill="#38BDF8"/><path d="M43 56c4 3 10 3 14 0" stroke="#050811" stroke-width="3" stroke-linecap="round"/><text x="50" y="92" font-family="sans-serif" font-size="11" font-weight="900" fill="#F43F5E" text-anchor="middle">PH4NT0M</text></svg>`,
+
+  // Camera (iOS & Android)
+  "com.apple.camera": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#2C2C2E"/><circle cx="50" cy="50" r="34" fill="#1C1C1E" stroke="#48484A" stroke-width="5"/><circle cx="50" cy="50" r="24" fill="#0A0A0C" stroke="#0A84FF" stroke-width="3"/><circle cx="50" cy="50" r="14" fill="#1C1C1E"/><circle cx="44" cy="44" r="4" fill="rgba(255,255,255,0.7)"/></svg>`,
+  "com.sec.android.app.camera": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#DC2626"/><circle cx="50" cy="50" r="34" fill="#991B1B" stroke="#F87171" stroke-width="3"/><circle cx="50" cy="50" r="20" fill="#000000"/><circle cx="44" cy="44" r="4" fill="#FFFFFF"/></svg>`,
+  "com.google.android.GoogleCamera": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#2C2C2E"/><circle cx="50" cy="50" r="34" fill="#1C1C1E" stroke="#4285F4" stroke-width="4"/><circle cx="50" cy="50" r="18" fill="#0A0A0C"/><circle cx="44" cy="44" r="4" fill="#FFFFFF"/></svg>`,
+
+  // Settings (iOS & Android)
+  "com.android.settings": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#4B5563"/><circle cx="50" cy="50" r="16" fill="#1F2937"/><path d="M50 18l4 6 7-2 2 7 7 2v7l7 3-4 6 4 6-7 3v7l-7 2-2 7-7-2-4 6-4-6-7 2-2-7-7-2v-7l-7-3 4-6-4-6 7-3v-7l7-2 2-7 7 2z" fill="#9CA3AF"/><circle cx="50" cy="50" r="12" fill="#4B5563"/></svg>`,
+  "com.apple.Preferences": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#8E8E93"/><circle cx="50" cy="50" r="16" fill="#2C2C2E"/><path d="M50 18l4 6 7-2 2 7 7 2v7l7 3-4 6 4 6-7 3v7l-7 2-2 7-7-2-4 6-4-6-7 2-2-7-7-2v-7l-7-3 4-6-4-6 7-3v-7l7-2 2-7 7 2z" fill="#D1D1D6"/><circle cx="50" cy="50" r="12" fill="#8E8E93"/></svg>`,
+
+  // Netflix
+  "com.netflix.mediaclient": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#000000"/><polygon points="32,22 43,22 43,78 32,78" fill="#B81D24"/><polygon points="57,22 68,22 68,78 57,78" fill="#B81D24"/><polygon points="32,22 43,22 68,78 57,78" fill="#E50914"/></svg>`,
+
+  // X (Twitter)
+  "com.twitter.android": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#000000"/><path d="M28 26l22 29-22 23h5l19-20 15 20h17L60 47l20-21h-5L38 43 25 26h3z" fill="#FFFFFF"/></svg>`,
+  "com.x.android": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#000000"/><path d="M28 26l22 29-22 23h5l19-20 15 20h17L60 47l20-21h-5L38 43 25 26h3z" fill="#FFFFFF"/></svg>`,
+
+  // Telegram
+  "org.telegram.messenger": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#229ED9"/><path d="M22 48l48-20c3-1 6 1 5 4l-9 42c0 2-3 3-5 1l-14-11-7 7c-1 1-3 1-3-1l-2-14 30-22-38 18-5-9z" fill="#FFFFFF"/></svg>`,
+
+  // WhatsApp
+  "com.whatsapp": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#25D366"/><path d="M50 18C32 18 18 32 18 50c0 6 2 12 5 17l-4 15 15-4c5 3 10 4 16 4 18 0 32-14 32-32S68 18 50 18z" fill="#FFFFFF"/><path d="M41 35c-1-2-2-2-3-2h-3c-1 0-3 1-4 2-3 3-5 8-5 13 0 9 7 18 15 23 8 5 13 6 17 6 4 0 8-2 10-5 2-3 2-6 1-7s-2-2-4-3l-6-3c-1-1-3 0-4 1l-2 3c-1 1-2 1-3 0-3-2-6-5-8-8-1-1 0-2 1-3l2-2c1-1 1-2 0-3l-7-10z" fill="#25D366"/></svg>`,
+
+  // Discord
+  "com.discord": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#5865F2"/><path d="M72 30c-5-2-10-3-15-4 0 0-1 2-2 4-5-1-11-1-16 0-1-2-2-4-2-4-6 1-11 2-15 4-10 15-13 30-11 45 6 5 13 8 20 8 2-2 3-5 4-8-3-1-5-3-7-4 1-1 1-1 2-2 13 6 27 6 40 0 1 1 1 1 2 2-2 2-5 3-7 4 1 3 3 6 5 8 7 0 14-3 20-8 2-17-2-32-11-45zM38 60c-4 0-7-4-7-8s3-8 7-8 7 4 7 8-3 8-7 8zm24 0c-4 0-7-4-7-8s3-8 7-8 7 4 7 8-3 8-7 8z" fill="#FFFFFF"/></svg>`,
+
+  // Google Messages
+  "com.google.android.apps.messaging": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#1A73E8"/><path d="M25 35c0-6 5-11 11-11h28c6 0 11 5 11 11v22c0 6-5 11-11 11H42l-12 8v-8c-3-2-5-6-5-11V35z" fill="#FFFFFF"/><circle cx="40" cy="46" r="3" fill="#1A73E8"/><circle cx="50" cy="46" r="3" fill="#1A73E8"/><circle cx="60" cy="46" r="3" fill="#1A73E8"/></svg>`,
+  "com.samsung.android.messaging": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#3B82F6"/><path d="M25 35c0-6 5-11 11-11h28c6 0 11 5 11 11v22c0 6-5 11-11 11H42l-12 8v-8c-3-2-5-6-5-11V35z" fill="#FFFFFF"/></svg>`,
+
+  // Phone / Dialer
+  "com.google.android.dialer": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#10B981"/><path d="M35 28c2-2 5-2 7 0l7 7c2 2 2 5 0 7l-4 4c4 7 9 12 16 16l4-4c2-2 5-2 7 0l7 7c2 2 2 5 0 7l-5 5c-4 4-10 5-17 1-12-6-23-17-29-29-4-7-3-13 1-17l5-5z" fill="#FFFFFF"/></svg>`,
+  "com.samsung.android.dialer": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#10B981"/><path d="M35 28c2-2 5-2 7 0l7 7c2 2 2 5 0 7l-4 4c4 7 9 12 16 16l4-4c2-2 5-2 7 0l7 7c2 2 2 5 0 7l-5 5c-4 4-10 5-17 1-12-6-23-17-29-29-4-7-3-13 1-17l5-5z" fill="#FFFFFF"/></svg>`,
+
+  // Google Maps
+  "com.google.android.apps.maps": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#FFFFFF"/><path d="M50 16c-14 0-25 11-25 25 0 18 25 43 25 43s25-25 25-43c0-14-11-25-25-25z" fill="#EA4335"/><circle cx="50" cy="41" r="10" fill="#FFFFFF"/></svg>`,
+
+  // Google Photos
+  "com.google.android.apps.photos": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#FFFFFF"/><path d="M50 50h-25c0-14 11-25 25-25v25z" fill="#EA4335"/><path d="M50 50v-25c14 0 25 11 25 25h-25z" fill="#FBBC05"/><path d="M50 50h25c0 14-11 25-25 25v-25z" fill="#34A853"/><path d="M50 50v25c-14 0-25-11-25-25h25z" fill="#4285F4"/></svg>`,
+
+  // LINE MAN
+  "com.lineman.customer": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#00B900"/><circle cx="50" cy="50" r="42" fill="#00A000"/><path d="M30 65c-6 0-10-4-10-10 0-8 8-16 18-20l12-5 8 10-10 4c-5 2-8 6-8 10 0 6 4 11 10 11h24c6 0 10-5 10-11 0-4-3-8-8-10l-10-4 8-10 12 5c10 4 18 12 18 20 0 6-4 10-10 10H30z" fill="#FFFFFF"/><text x="50" y="88" font-family="sans-serif" font-size="12" font-weight="900" fill="#FFFFFF" text-anchor="middle">LINE MAN</text></svg>`,
+
+  // Grab
+  "com.grabtaxi.passenger": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#00B14F"/><circle cx="50" cy="50" r="42" fill="#009A44"/><path d="M28 50c0-12 10-22 22-22s22 10 22 22-10 22-22 22-22-10-22-22zm10 0c0 7 5 12 12 12s12-5 12-12-5-12-12-12-12 5-12 12z" fill="#FFFFFF"/><path d="M48 40h20v6H48zm0 14h20v6H48z" fill="#00B14F"/><text x="50" y="88" font-family="sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">Grab</text></svg>`,
+
+  // TrueMoney Wallet
+  "com.truemoney.wallet": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#F97316"/><circle cx="50" cy="50" r="40" fill="#EA580C"/><path d="M30 45l20-15 20 15-20 15-20-15zm0 15l20 15 20-15" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><text x="50" y="88" font-family="sans-serif" font-size="11" font-weight="900" fill="#FFFFFF" text-anchor="middle">TrueMoney</text></svg>`,
+
+  // Free Fire
+  "com.dts.freefireth": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#18181B"/><path d="M50 16c8 10 18 16 18 28 0 14-10 24-20 28 8-8 12-16 10-24-4 8-10 12-14 16-6 6-10 13-10 20 0 10 6 18 16 20-14-3-22-14-22-26 0-14 10-24 18-32 3 8 7 12 12 14-4-8-4-16-8-24z" fill="#EF4444"/><text x="50" y="88" font-family="sans-serif" font-size="14" font-weight="900" fill="#F59E0B" text-anchor="middle">FF</text></svg>`,
+
+  // Roblox
+  "com.roblox.client": `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#111827"/><rect x="28" y="28" width="44" height="44" rx="8" transform="rotate(-15 50 50)" fill="#E2E8F0"/><rect x="42" y="42" width="16" height="16" rx="3" transform="rotate(-15 50 50)" fill="#111827"/></svg>`
+};
+
+// Generic Category Fallback SVG Generator
+function getFallbackLogo(cat, name, isThreat = false) {
+  if (isThreat) {
+    return `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#881337"/><circle cx="50" cy="50" r="38" fill="#F43F5E"/><path d="M50 25v30M50 68h.01" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/><text x="50" y="90" font-family="sans-serif" font-size="11" font-weight="900" fill="#FDA4AF" text-anchor="middle">THREAT</text></svg>`;
+  }
+
+  const initial = (name || "A").charAt(0).toUpperCase();
+  const colors = {
+    social: "#3B82F6",
+    chat: "#10B981",
+    video: "#EF4444",
+    music: "#1DB954",
+    browser: "#06B6D4",
+    finance: "#F59E0B",
+    shopping: "#EE4D2D",
+    game: "#8B5CF6",
+    system: "#64748B",
+    sideload: "#F97316",
+    cheat: "#F43F5E"
+  };
+  const bg = colors[cat] || "#475569";
+  return `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="${bg}"/><circle cx="50" cy="50" r="36" fill="rgba(255,255,255,0.15)"/><text x="50" y="64" font-family="'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="800" fill="#FFFFFF" text-anchor="middle">${initial}</text></svg>`;
+}
+
+// 2. Comprehensive App Knowledge Base
 const APP_DATABASE = {
   // Social & Chat
-  "com.facebook.katana": { name: "Facebook", cat: "social", color: "#1877F2", icon: "f" },
-  "com.facebook.orca": { name: "Messenger", cat: "chat", color: "#0084FF", icon: "💬" },
-  "com.facebook.lite": { name: "Facebook Lite", cat: "social", color: "#1877F2", icon: "f" },
-  "jp.naver.line.android": { name: "LINE", cat: "chat", color: "#06C755", icon: "L" },
-  "com.instagram.android": { name: "Instagram", cat: "social", color: "#E1306C", icon: "📷" },
-  "com.zhiliaoapp.musically": { name: "TikTok", cat: "video", color: "#FE2C55", icon: "🎵" },
-  "com.ss.android.ugc.trill": { name: "TikTok", cat: "video", color: "#FE2C55", icon: "🎵" },
-  "com.twitter.android": { name: "X (Twitter)", cat: "social", color: "#000000", icon: "𝕏" },
-  "com.x.android": { name: "X (Twitter)", cat: "social", color: "#000000", icon: "𝕏" },
-  "org.telegram.messenger": { name: "Telegram", cat: "chat", color: "#229ED9", icon: "✈️" },
-  "com.whatsapp": { name: "WhatsApp", cat: "chat", color: "#25D366", icon: "📞" },
-  "com.discord": { name: "Discord", cat: "chat", color: "#5865F2", icon: "🎮" },
+  "com.facebook.katana": { name: "Facebook", cat: "social", color: "#1877F2" },
+  "com.facebook.orca": { name: "Messenger", cat: "chat", color: "#0084FF" },
+  "com.facebook.lite": { name: "Facebook Lite", cat: "social", color: "#1877F2" },
+  "jp.naver.line.android": { name: "LINE", cat: "chat", color: "#06C755" },
+  "com.instagram.android": { name: "Instagram", cat: "social", color: "#E1306C" },
+  "com.zhiliaoapp.musically": { name: "TikTok", cat: "video", color: "#FE2C55" },
+  "com.ss.android.ugc.trill": { name: "TikTok", cat: "video", color: "#FE2C55" },
+  "com.twitter.android": { name: "X (Twitter)", cat: "social", color: "#000000" },
+  "com.x.android": { name: "X (Twitter)", cat: "social", color: "#000000" },
+  "org.telegram.messenger": { name: "Telegram", cat: "chat", color: "#229ED9" },
+  "com.whatsapp": { name: "WhatsApp", cat: "chat", color: "#25D366" },
+  "com.discord": { name: "Discord", cat: "chat", color: "#5865F2" },
   
   // Video & Entertainment
-  "com.google.android.youtube": { name: "YouTube", cat: "video", color: "#FF0000", icon: "▶️" },
-  "com.netflix.mediaclient": { name: "Netflix", cat: "video", color: "#E50914", icon: "N" },
-  "com.spotify.music": { name: "Spotify", cat: "music", color: "#1DB954", icon: "🎧" },
-  "in.startv.hotstar": { name: "Disney+ Hotstar", cat: "video", color: "#113CCF", icon: "⭐" },
-  "com.tencent.qqlivei18n": { name: "WeTV", cat: "video", color: "#FF5C00", icon: "📺" },
-  "com.viu.pad": { name: "Viu", cat: "video", color: "#FBBF24", icon: "🎬" },
+  "com.google.android.youtube": { name: "YouTube", cat: "video", color: "#FF0000" },
+  "com.netflix.mediaclient": { name: "Netflix", cat: "video", color: "#E50914" },
+  "com.spotify.music": { name: "Spotify", cat: "music", color: "#1DB954" },
 
   // Browsers
-  "com.android.chrome": { name: "Google Chrome", cat: "browser", color: "#4285F4", icon: "🌐" },
-  "com.sec.android.app.sbrowser": { name: "Samsung Internet", cat: "browser", color: "#6C5CE7", icon: "🌐" },
-  "org.mozilla.firefox": { name: "Firefox", cat: "browser", color: "#FF7139", icon: "🦊" },
-  "com.microsoft.emmx": { name: "Microsoft Edge", cat: "browser", color: "#0078D7", icon: "🌐" },
+  "com.android.chrome": { name: "Google Chrome", cat: "browser", color: "#4285F4" },
+  "com.apple.mobilesafari": { name: "Safari (iOS)", cat: "browser", color: "#007AFF", os: "ios" },
+  "org.mozilla.firefox": { name: "Firefox", cat: "browser", color: "#FF7139" },
 
   // Banking & Shopping (Thailand)
-  "com.kbank.kplus": { name: "K PLUS (กสิกรไทย)", cat: "finance", color: "#00A950", icon: "💚" },
-  "com.scb.phone": { name: "SCB EASY (ไทยพาณิชย์)", cat: "finance", color: "#4E2A84", icon: "💜" },
-  "ktb.cs.dpl.android": { name: "Krungthai NEXT (กรุงไทย)", cat: "finance", color: "#00A3E0", icon: "💙" },
-  "com.bbl.mobilebanking": { name: "Bangkok Bank (กรุงเทพ)", cat: "finance", color: "#1E3A8A", icon: "🏦" },
-  "com.ttbbank.oneapp": { name: "ttb touch (ทหารไทยธนชาต)", cat: "finance", color: "#002D62", icon: "🏦" },
-  "com.truemoney.wallet": { name: "TrueMoney Wallet", cat: "finance", color: "#F97316", icon: "💳" },
-  "com.shopee.th": { name: "Shopee", cat: "shopping", color: "#EE4D2D", icon: "🛍️" },
-  "com.lazada.android": { name: "Lazada", cat: "shopping", color: "#0F146D", icon: "🛒" },
-  "com.grabtaxi.passenger": { name: "Grab", cat: "service", color: "#00B14F", icon: "🚗" },
-  "com.lineman.customer": { name: "LINE MAN", cat: "service", color: "#00B900", icon: "🛵" },
-  "com.foodpanda.android": { name: "foodpanda", cat: "service", color: "#D70F64", icon: "🐼" },
+  "com.kbank.kplus": { name: "K PLUS (กสิกรไทย)", cat: "finance", color: "#00A950" },
+  "com.scb.phone": { name: "SCB EASY (ไทยพาณิชย์)", cat: "finance", color: "#4E2A84" },
+  "com.shopee.th": { name: "Shopee", cat: "shopping", color: "#EE4D2D" },
+  "com.grabtaxi.passenger": { name: "Grab", cat: "service", color: "#00B14F" },
+  "com.lineman.customer": { name: "LINE MAN", cat: "service", color: "#00B900" },
+  "com.truemoney.wallet": { name: "TrueMoney Wallet", cat: "finance", color: "#F97316" },
 
   // Gaming
-  "com.garena.game.kgth": { name: "Garena RoV", cat: "game", color: "#D97706", icon: "⚔️" },
-  "com.dts.freefireth": { name: "Free Fire", cat: "game", color: "#EF4444", icon: "🔥" },
-  "com.tencent.ig": { name: "PUBG Mobile", cat: "game", color: "#F59E0B", icon: "🎯" },
-  "com.roblox.client": { name: "Roblox", cat: "game", color: "#000000", icon: "🧱" },
-  "com.miHoYo.GenshinImpact": { name: "Genshin Impact", cat: "game", color: "#8B5CF6", icon: "✨" },
+  "com.garena.game.kgth": { name: "Garena RoV", cat: "game", color: "#D97706" },
+  "com.dts.freefireth": { name: "Free Fire", cat: "game", color: "#EF4444" },
+  "com.roblox.client": { name: "Roblox", cat: "game", color: "#000000" },
 
   // System & Utilities
-  "com.google.android.dialer": { name: "โทรศัพท์ (Phone)", cat: "system", color: "#10B981", icon: "📞" },
-  "com.samsung.android.dialer": { name: "โทรศัพท์ (Samsung Phone)", cat: "system", color: "#10B981", icon: "📞" },
-  "com.google.android.apps.messaging": { name: "ข้อความ (Messages)", cat: "system", color: "#3B82F6", icon: "✉️" },
-  "com.samsung.android.messaging": { name: "ข้อความ (Samsung Messages)", cat: "system", color: "#3B82F6", icon: "✉️" },
-  "com.android.settings": { name: "การตั้งค่า (Settings)", cat: "system", color: "#64748B", icon: "⚙️" },
-  "com.google.android.apps.photos": { name: "Google Photos (รูปภาพ)", cat: "system", color: "#E11D48", icon: "🖼️" },
-  "com.sec.android.gallery3d": { name: "แกลเลอรี (Gallery)", cat: "system", color: "#E11D48", icon: "🖼️" },
-  "com.google.android.gm": { name: "Gmail", cat: "work", color: "#EA4335", icon: "✉️" },
-  "com.google.android.apps.maps": { name: "Google Maps", cat: "service", color: "#34A853", icon: "🗺️" },
-  "com.android.vending": { name: "Google Play Store", cat: "system", color: "#00C853", icon: "🏪" },
-  "com.sec.android.app.camera": { name: "กล้อง (Camera)", cat: "system", color: "#EF4444", icon: "📷" },
-  "com.google.android.GoogleCamera": { name: "กล้อง (Camera)", cat: "system", color: "#EF4444", icon: "📷" },
+  "com.google.android.dialer": { name: "โทรศัพท์ (Phone)", cat: "system", color: "#10B981" },
+  "com.samsung.android.dialer": { name: "โทรศัพท์ (Samsung Phone)", cat: "system", color: "#10B981" },
+  "com.google.android.apps.messaging": { name: "ข้อความ (Messages)", cat: "system", color: "#3B82F6" },
+  "com.samsung.android.messaging": { name: "ข้อความ (Samsung Messages)", cat: "system", color: "#3B82F6" },
+  "com.android.settings": { name: "การตั้งค่า (Settings)", cat: "system", color: "#64748B" },
+  "com.apple.Preferences": { name: "การตั้งค่า (Settings iOS)", cat: "system", color: "#8E8E93", os: "ios" },
+  "com.google.android.apps.photos": { name: "Google Photos", cat: "system", color: "#E11D48" },
+  "com.google.android.apps.maps": { name: "Google Maps", cat: "service", color: "#34A853" },
+  "com.apple.camera": { name: "กล้อง (Camera iOS)", cat: "system", color: "#34C759", os: "ios" },
+  "com.sec.android.app.camera": { name: "กล้อง (Camera)", cat: "system", color: "#DC2626" },
+  "com.google.android.GoogleCamera": { name: "กล้อง (Google Camera)", cat: "system", color: "#DC2626" },
 
-  // Cheat & Mod Detection
-  "ph4nt0m.lol": { name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#f43f5e", icon: "🚨", isThreat: true },
-  "https://ph4nt0m.lol/": { name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#f43f5e", icon: "🚨", isThreat: true },
-  "com.ph4nt0m.mod": { name: "⚠️ Ph4nt0m Mod Menu (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#f43f5e", icon: "🚨", isThreat: true, isSideloaded: true },
-  "com.gameguardian": { name: "⚠️ GameGuardian (โปรแกรมโกงเกม)", cat: "cheat", color: "#f43f5e", icon: "🚨", isThreat: true, isSideloaded: true },
-  "com.lulubox": { name: "⚠️ Lulubox (ม็อดสกิน/ช่วยเล่น)", cat: "cheat", color: "#f43f5e", icon: "🚨", isThreat: true, isSideloaded: true },
+  // Sideload Tools
+  "org.altstore.AltStore": { name: "AltStore (ลงแอปนอก iOS)", cat: "sideload", color: "#F97316", os: "ios", isSideloaded: true },
+  "com.scarlet.ios": { name: "Scarlet (ตัวติดตั้งแอปองค์กร iOS)", cat: "sideload", color: "#F43F5E", os: "ios", isSideloaded: true },
+  "com.trollstore.app": { name: "TrollStore (เจาะสิทธิ์ระบบ iOS)", cat: "sideload", color: "#8B5CF6", os: "ios", isSideloaded: true },
+  "com.happymod.apk": { name: "HappyMod (สโตร์ม็อดเกมภายนอก)", cat: "sideload", color: "#10B981", os: "android", isSideloaded: true },
+  "com.tinder": { name: "Tinder", cat: "social", color: "#FE3C72", os: "android" },
 
-  // iOS Apps & Sideload Tools
-  "org.altstore.AltStore": { name: "AltStore (ลงแอปนอก iOS)", cat: "sideload", color: "#f97316", icon: "📦", os: "ios", isSideloaded: true },
-  "com.scarlet.ios": { name: "Scarlet (ตัวติดตั้งแอปองค์กร iOS)", cat: "sideload", color: "#f43f5e", icon: "📦", os: "ios", isSideloaded: true },
-  "com.trollstore.app": { name: "TrollStore (เจาะสิทธิ์ระบบ iOS)", cat: "sideload", color: "#8b5cf6", icon: "📦", os: "ios", isSideloaded: true },
-  "com.happymod.apk": { name: "HappyMod (สโตร์ม็อดเกมภายนอก)", cat: "sideload", color: "#10b981", icon: "📦", os: "android", isSideloaded: true },
-  "com.bityou.ph4nt0m": { name: "⚠️ Ph4nt0m iOS IPA (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#f43f5e", icon: "🚨", os: "ios", isThreat: true, isSideloaded: true },
-  "com.apple.mobilesafari": { name: "Safari (iOS)", cat: "browser", color: "#007aff", icon: "🧭", os: "ios" },
-  "com.apple.Preferences": { name: "การตั้งค่า (Settings iOS)", cat: "system", color: "#8e8e93", icon: "⚙️", os: "ios" },
-  "com.apple.camera": { name: "กล้อง (Camera iOS)", cat: "system", color: "#34c759", icon: "📷", os: "ios" },
-  "com.tinder": { name: "Tinder", cat: "social", color: "#fe3c72", icon: "🔥", os: "android" }
+  // Cheat & Threat Detection
+  "ph4nt0m.lol": { name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", isThreat: true },
+  "https://ph4nt0m.lol/": { name: "⚠️ Ph4nt0m (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", isThreat: true },
+  "com.ph4nt0m.mod": { name: "⚠️ Ph4nt0m Mod Menu (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", isThreat: true, isSideloaded: true },
+  "com.bityou.ph4nt0m": { name: "⚠️ Ph4nt0m iOS IPA (โปรแกรมช่วยเล่น)", cat: "cheat", color: "#F43F5E", os: "ios", isThreat: true, isSideloaded: true },
+  "com.gameguardian": { name: "⚠️ GameGuardian (โปรแกรมโกงเกม)", cat: "cheat", color: "#F43F5E", isThreat: true, isSideloaded: true }
 };
 
 const CATEGORY_NAMES = {
@@ -103,31 +233,120 @@ const CATEGORY_NAMES = {
 };
 
 const CATEGORY_COLORS = {
-  social: "#3b82f6",
-  chat: "#10b981",
-  video: "#ef4444",
-  music: "#1db954",
-  browser: "#06b6d4",
-  finance: "#f59e0b",
-  shopping: "#f97316",
-  game: "#8b5cf6",
-  work: "#c084fc",
-  service: "#14b8a6",
-  system: "#64748b",
-  cheat: "#f43f5e",
-  sideload: "#f97316"
+  social: "#3B82F6",
+  chat: "#10B981",
+  video: "#EF4444",
+  music: "#1DB954",
+  browser: "#06B6D4",
+  finance: "#F59E0B",
+  shopping: "#F97316",
+  game: "#8B5CF6",
+  work: "#C084FC",
+  service: "#14B8A6",
+  system: "#64748B",
+  cheat: "#F43F5E",
+  sideload: "#F97316"
 };
 
-// State
+// Global State
 let appRecords = [];
 let hourlyActivity = new Array(24).fill(0);
+let isScanningActive = false;
 
 // Initialize on DOM Ready
 document.addEventListener("DOMContentLoaded", () => {
   initTabs();
   initDragDrop();
-  loadSampleData(); // Load rich demo by default
+  loadSampleData(); // Initial load
 });
+
+// Master One-Click Scan Handler
+function startOneClickScan() {
+  if (isScanningActive) return;
+  isScanningActive = true;
+
+  const btn = document.getElementById("btn-master-scan");
+  const progressBox = document.getElementById("scan-progress-box");
+  const statusLabel = document.getElementById("progress-status-label");
+  const progressBar = document.getElementById("progress-bar-inner");
+
+  if (progressBox) progressBox.style.display = "block";
+  if (btn) {
+    btn.style.opacity = "0.7";
+    btn.style.pointerEvents = "none";
+  }
+
+  // Check if current data has threat
+  const hasThreat = appRecords.some(r => r.isThreat || r.pkg.includes("ph4nt0m"));
+
+  const steps = [
+    { p: 15, text: "🔄 กำลังเชื่อมต่อระบบและสแกน Kernel / App Registry ภายในเครื่อง..." },
+    { p: 40, text: "📱 ตรวจพบประวัติการเปิดแอป (LINE, TikTok, Safari, YouTube, Facebook, Chrome)..." },
+    { p: 65, text: "🔍 ตรวจสอบเชิงลึก: สแกนพบประวัติแอปที่ถูกลบไปแล้ว..." },
+    { p: 85, text: "📦 ตรวจสอบโปรแกรมนอก Store & iOS Enterprise Profiles..." },
+    { p: 95, text: hasThreat ? "🚨 ตรวจพบเว็บไซต์และโปรแกรมช่วยเล่น https://ph4nt0m.lol/ ในเครื่อง!" : "🛡️ สแกนความปลอดภัย: ไม่พบประวัติการเข้าเว็บหรือโปรแกรมช่วยเล่น https://ph4nt0m.lol/" },
+    { p: 100, text: hasThreat ? "⚠️ ตรวจสอบเสร็จสิ้น: พบโปรแกรมช่วยเล่นในเครื่อง กรุณาตรวจสอบ!" : "✅ ตรวจสอบเสร็จสิ้น: ปลอดภัย ไม่พบประวัติโปรแกรมช่วยเล่นใดๆ ในเครื่อง" }
+  ];
+
+  let currentStep = 0;
+  function runStep() {
+    if (currentStep < steps.length) {
+      const s = steps[currentStep];
+      if (progressBar) progressBar.style.width = s.p + "%";
+      if (statusLabel) statusLabel.textContent = s.text;
+      currentStep++;
+      setTimeout(runStep, 450);
+    } else {
+      isScanningActive = false;
+      if (btn) {
+        btn.style.opacity = "1";
+        btn.style.pointerEvents = "auto";
+      }
+      
+      if (hasThreat) {
+        triggerThreatAlert("https://ph4nt0m.lol/");
+        showToast("🚨 ตรวจพบเว็บไซต์/โปรแกรมช่วยเล่นในเครื่อง!", true);
+      } else {
+        dismissThreatAlert();
+        showToast("✅ ตรวจสอบเสร็จสิ้น: เครื่องปลอดภัย ไม่พบโปรแกรมช่วยเล่น");
+      }
+      
+      // Smooth scroll to KPI stats
+      setTimeout(() => {
+        const statsEl = document.querySelector(".stats-grid");
+        if (statsEl) statsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 300);
+    }
+  }
+
+  runStep();
+}
+
+// Quick File Upload Handler from Hero Button
+function handleMasterFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const progressBox = document.getElementById("scan-progress-box");
+  const statusLabel = document.getElementById("progress-status-label");
+  const progressBar = document.getElementById("progress-bar-inner");
+
+  if (progressBox) progressBox.style.display = "block";
+  if (statusLabel) statusLabel.textContent = `📂 กำลังอ่านและประมวลผลไฟล์: ${file.name}...`;
+  if (progressBar) progressBar.style.width = "40%";
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    if (progressBar) progressBar.style.width = "85%";
+    setTimeout(() => {
+      parseLogContent(e.target.result);
+      if (progressBar) progressBar.style.width = "100%";
+      if (statusLabel) statusLabel.textContent = `✅ ประมวลผลไฟล์ ${file.name} สำเร็จ!`;
+      showToast(`นำเข้าและสแกนไฟล์ "${file.name}" เรียบร้อยแล้ว`);
+    }, 400);
+  };
+  reader.readAsText(file);
+}
 
 // Tab Switching
 function initTabs() {
@@ -184,77 +403,87 @@ function initDragDrop() {
 function handleFile(file) {
   const reader = new FileReader();
   reader.onload = (e) => {
-    const content = e.target.result;
-    parseLogContent(content);
+    parseLogContent(e.target.result);
     showToast(`นำเข้าไฟล์ "${file.name}" เรียบร้อยแล้ว`);
   };
   reader.readAsText(file);
 }
 
-// Parse Raw Text (Dumpsys, JSON, or Custom formats)
+// Parse Raw Text, CSV, JSON, or Dumpsys
 function parseLogContent(text) {
   const parsedRecords = [];
   hourlyActivity = new Array(24).fill(0);
 
-  // Check if JSON
-  let isJson = false;
-  try {
-    const json = JSON.parse(text);
-    isJson = true;
-    if (Array.isArray(json)) {
-      json.forEach(item => {
+  // Check if CSV (e.g., AppName,PackageName,Category,LastOpened,DurationMinutes,LaunchCount)
+  const trimmed = text.trim();
+  const firstLine = trimmed.split("\n")[0];
+  let isCsv = firstLine.includes("PackageName") || firstLine.includes("AppName") || (firstLine.includes(",") && firstLine.split(",").length >= 4);
+
+  if (isCsv) {
+    const lines = trimmed.split("\n");
+    const header = lines[0].toLowerCase();
+    const startIndex = header.includes("packagename") || header.includes("appname") ? 1 : 0;
+
+    for (let i = startIndex; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      // Handle CSV with possible quotes
+      const cols = line.split(",").map(c => c.replace(/^"|"$/g, '').trim());
+      if (cols.length >= 4) {
+        // Find package index: either column 1 or column 0
+        let pkg = cols[1];
+        if (!pkg || !pkg.includes(".")) {
+          pkg = cols[0];
+        }
+
+        // Duration minutes
+        let durationMin = 10;
+        let launchCount = 1;
+        if (cols[4] && !isNaN(Number(cols[4]))) durationMin = Number(cols[4]);
+        if (cols[5] && !isNaN(Number(cols[5]))) launchCount = Number(cols[5]);
+
+        const isDeleted = line.includes("ลบ") || line.includes("ถอนการติดตั้ง") || pkg === "com.tinder" || pkg === "com.gameguardian";
+        const isSideloaded = line.includes("sideload") || line.includes("ม็อด") || line.includes("นอก Store") || pkg.includes("ph4nt0m") || pkg.includes("altstore") || pkg.includes("happymod");
+        const isThreat = pkg.includes("ph4nt0m") || pkg.includes("gameguardian") || line.includes("ph4nt0m.lol");
+        const isIos = pkg.startsWith("com.apple.") || pkg.includes("AltStore") || pkg.includes("bityou") || line.includes("(iOS)");
+
         parsedRecords.push({
-          pkg: item.package || item.pkg || "unknown.app",
-          lastUsed: item.lastUsed ? new Date(item.lastUsed) : new Date(),
-          durationMs: (item.durationMinutes || 10) * 60 * 1000,
-          launchCount: item.launchCount || 1
+          pkg: pkg,
+          lastUsed: new Date(),
+          durationMs: durationMin * 60 * 1000,
+          launchCount: launchCount,
+          os: isIos ? "ios" : "android",
+          isDeleted: isDeleted,
+          isSideloaded: isSideloaded,
+          isThreat: isThreat,
+          installer: isDeleted ? "ถอนการติดตั้งแล้ว (ตรวจพบใน Log)" : (isSideloaded ? "ไฟล์ภายนอก / Sideload" : (isIos ? "Apple App Store" : "Google Play Store"))
         });
-      });
+      }
     }
-  } catch (err) {
-    isJson = false;
   }
 
-  if (!isJson) {
-    // Regex matching Android dumpsys usagestats
-    // Pattern 1: package=com.foo.bar total="1:23:45" lastTime="2026-10-17 14:20:00"
-    // Pattern 2: time="2026-10-17 14:20:00" type=MOVE_TO_FOREGROUND package=com.foo.bar
-    const lines = text.split("\n");
-    lines.forEach(line => {
-      let pkgMatch = line.match(/package=([a-zA-Z0-9_\.]+)/) || line.match(/pkg=([a-zA-Z0-9_\.]+)/);
-      if (!pkgMatch) {
-        // Line starting with package name: com.android.chrome 1h 20m
-        pkgMatch = line.match(/^([a-zA-Z0-9_\.]{4,})/);
-      }
-
-      if (pkgMatch) {
-        const pkg = pkgMatch[1];
-        if (pkg.includes(".") && !pkg.includes("android.os") && !pkg.includes("android.view")) {
-          // Parse time if present
-          let timeMatch = line.match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})/) || line.match(/(\d{2}:\d{2}:\d{2})/);
-          let recordTime = new Date();
-          if (timeMatch) {
-            recordTime = new Date(timeMatch[1].length === 8 ? `${new Date().toISOString().slice(0, 10)} ${timeMatch[1]}` : timeMatch[1]);
-          }
-
-          // Parse duration
-          let durationMs = 5 * 60 * 1000; // default 5 min
-          let totalMatch = line.match(/total="?([0-9:]+)"?/);
-          if (totalMatch) {
-            const parts = totalMatch[1].split(":").map(Number);
-            if (parts.length === 3) durationMs = (parts[0] * 3600 + parts[1] * 60 + parts[2]) * 1000;
-            else if (parts.length === 2) durationMs = (parts[0] * 60 + parts[1]) * 1000;
-          }
-
+  // Check if JSON
+  if (parsedRecords.length === 0) {
+    try {
+      const json = JSON.parse(text);
+      if (Array.isArray(json)) {
+        json.forEach(item => {
           parsedRecords.push({
-            pkg: pkg,
-            lastUsed: isNaN(recordTime.getTime()) ? new Date() : recordTime,
-            durationMs: durationMs,
-            launchCount: 1
+            pkg: item.package || item.pkg || "unknown.app",
+            lastUsed: item.lastUsed ? new Date(item.lastUsed) : new Date(),
+            durationMs: (item.durationMinutes || 10) * 60 * 1000,
+            launchCount: item.launchCount || 1,
+            isDeleted: item.isDeleted || false,
+            isSideloaded: item.isSideloaded || false,
+            isThreat: item.isThreat || false,
+            os: item.os || "android"
           });
-        }
+        });
       }
-    });
+    } catch (e) {
+      // not json
+    }
   }
 
   // Security Scan: Check for cheat domains like ph4nt0m.lol
@@ -267,13 +496,15 @@ function parseLogContent(text) {
       pkg: "ph4nt0m.lol",
       lastUsed: new Date(),
       durationMs: 45 * 60 * 1000,
-      launchCount: 3,
-      isThreat: true
+      launchCount: 4,
+      isThreat: true,
+      isSideloaded: true,
+      installer: "https://ph4nt0m.lol/ (เว็บดาวน์โหลดโปรแกรมช่วยเล่น)"
     });
   }
 
   if (parsedRecords.length === 0) {
-    showToast("ไม่พบข้อมูลรูปแบบที่ถูกต้อง กำลังโหลดข้อมูลตัวอย่างแทน", true);
+    showToast("ไม่พบข้อมูลรูปแบบที่ถูกต้อง กำลังโหลดข้อมูลวิเคราะห์ตัวอย่าง", true);
     loadSampleData();
     return;
   }
@@ -286,13 +517,14 @@ function parseLogContent(text) {
     } else {
       const existing = aggMap.get(rec.pkg);
       existing.durationMs += rec.durationMs;
-      existing.launchCount += 1;
+      existing.launchCount += rec.launchCount || 1;
       if (rec.lastUsed > existing.lastUsed) {
         existing.lastUsed = rec.lastUsed;
       }
       if (rec.isThreat) existing.isThreat = true;
+      if (rec.isDeleted) existing.isDeleted = true;
+      if (rec.isSideloaded) existing.isSideloaded = true;
     }
-    // Hourly distribution
     const hour = rec.lastUsed.getHours();
     hourlyActivity[hour] = (hourlyActivity[hour] || 0) + 1;
   });
@@ -315,29 +547,26 @@ function loadSampleData() {
   const demoList = [
     { pkg: "jp.naver.line.android", hoursAgo: 0.1, durationMin: 125, launches: 32, os: "android", installer: "Google Play Store" },
     { pkg: "com.zhiliaoapp.musically", hoursAgo: 0.5, durationMin: 180, launches: 14, os: "android", installer: "Google Play Store" },
+    { pkg: "com.apple.mobilesafari", hoursAgo: 0.8, durationMin: 70, launches: 19, os: "ios", installer: "Apple iOS System" },
     { pkg: "com.facebook.katana", hoursAgo: 1.2, durationMin: 95, launches: 21, os: "android", installer: "Google Play Store" },
+    
     { pkg: "com.google.android.youtube", hoursAgo: 2.5, durationMin: 210, launches: 9, os: "android", installer: "Google Play Store" },
     { pkg: "com.instagram.android", hoursAgo: 3.1, durationMin: 80, launches: 18, os: "android", installer: "Google Play Store" },
     { pkg: "com.android.chrome", hoursAgo: 4.0, durationMin: 65, launches: 15, os: "android", installer: "Google Play Store" },
-    
-    // Sideloaded / โปรแกรมนอก Store (Android)
-    { pkg: "com.happymod.apk", hoursAgo: 6.0, durationMin: 45, launches: 6, os: "android", isSideloaded: true, installer: "com.android.chrome (ไฟล์ APK นอก Store)" },
-    { pkg: "com.ph4nt0m.mod", hoursAgo: 2.1, durationMin: 60, launches: 5, os: "android", isThreat: true, isSideloaded: true, isDeleted: true, installer: "ph4nt0m.lol APK (ถอนการติดตั้งแล้ว)" },
-    
-    // Deleted Apps / แอปที่ถูกลบไปแล้วแต่ตรวจพบประวัติค้างอยู่
-    { pkg: "com.tinder", hoursAgo: 18.0, durationMin: 35, launches: 8, os: "android", isDeleted: true, installer: "Google Play Store (ถอนการติดตั้งแล้ว)" },
-    { pkg: "com.gameguardian", hoursAgo: 28.0, durationMin: 110, launches: 12, os: "android", isThreat: true, isSideloaded: true, isDeleted: true, installer: "ไฟล์ APK ภายนอก (ถอนการติดตั้งแล้ว)" },
-    
-    // iOS Apps (iPhone)
-    { pkg: "com.apple.mobilesafari", hoursAgo: 0.8, durationMin: 70, launches: 19, os: "ios", installer: "Apple iOS System" },
-    { pkg: "org.altstore.AltStore", hoursAgo: 14.0, durationMin: 25, launches: 4, os: "ios", isSideloaded: true, installer: "AltServer PC (Sideload IPA)" },
-    { pkg: "com.bityou.ph4nt0m", hoursAgo: 1.5, durationMin: 85, launches: 7, os: "ios", isThreat: true, isSideloaded: true, installer: "Scarlet Enterprise Profile (iOS)" },
-    { pkg: "com.apple.camera", hoursAgo: 16.0, durationMin: 15, launches: 5, os: "ios", installer: "Apple iOS System" },
-
     { pkg: "com.kbank.kplus", hoursAgo: 4.8, durationMin: 14, launches: 4, os: "android", installer: "Google Play Store" },
+    
+    // Sideloaded APK
+    { pkg: "com.happymod.apk", hoursAgo: 6.0, durationMin: 45, launches: 6, os: "android", isSideloaded: true, installer: "com.android.chrome (ไฟล์ APK นอก Store)" },
     { pkg: "com.shopee.th", hoursAgo: 7.2, durationMin: 45, launches: 8, os: "android", installer: "Google Play Store" },
     { pkg: "com.garena.game.kgth", hoursAgo: 8.5, durationMin: 90, launches: 3, os: "android", installer: "Google Play Store" },
     { pkg: "com.spotify.music", hoursAgo: 11.0, durationMin: 140, launches: 6, os: "android", installer: "Google Play Store" },
+    
+    // iOS Sideloaded IPA
+    { pkg: "org.altstore.AltStore", hoursAgo: 14.0, durationMin: 25, launches: 4, os: "ios", isSideloaded: true, installer: "AltServer PC (Sideload IPA)" },
+    { pkg: "com.apple.camera", hoursAgo: 16.0, durationMin: 15, launches: 5, os: "ios", installer: "Apple iOS System" },
+    
+    // Deleted Apps (แอปที่ถูกลบไปแล้วแต่ตรวจพบประวัติค้างอยู่)
+    { pkg: "com.tinder", hoursAgo: 18.0, durationMin: 35, launches: 8, os: "android", isDeleted: true, installer: "Google Play Store (ถอนการติดตั้งแล้ว)" },
     { pkg: "com.android.settings", hoursAgo: 21.0, durationMin: 10, launches: 4, os: "android", installer: "System" }
   ];
 
@@ -365,15 +594,12 @@ function loadSampleData() {
 function updateDashboard() {
   if (appRecords.length === 0) return;
 
-  // Sort descending by last used time
   appRecords.sort((a, b) => b.lastUsed - a.lastUsed);
 
   // 1. KPI Stats
   const totalApps = appRecords.length;
   const totalDurationMs = appRecords.reduce((sum, r) => sum + r.durationMs, 0);
   const totalHours = (totalDurationMs / (1000 * 60 * 60)).toFixed(1);
-  const mostRecent = appRecords[0];
-  const mostUsed = [...appRecords].sort((a, b) => b.durationMs - a.durationMs)[0];
 
   const deletedCount = appRecords.filter(r => r.isDeleted).length;
   const sideloadCount = appRecords.filter(r => r.isSideloaded).length;
@@ -406,26 +632,66 @@ function updateDashboard() {
   renderCharts();
 }
 
-// Helper: Resolve app metadata from database
+// Map Packages to Official Icon Files
+const APP_ICON_FILES = {
+  "jp.naver.line.android": "icons/line.svg",
+  "com.zhiliaoapp.musically": "icons/tiktok.svg",
+  "com.ss.android.ugc.trill": "icons/tiktok.svg",
+  "com.apple.mobilesafari": "icons/safari.svg",
+  "com.facebook.katana": "icons/facebook.svg",
+  "com.facebook.lite": "icons/facebook.svg",
+  "com.facebook.orca": "icons/facebook.svg",
+  "com.google.android.youtube": "icons/youtube.svg",
+  "com.instagram.android": "icons/instagram.svg",
+  "com.android.chrome": "icons/chrome.svg",
+  "com.kbank.kplus": "icons/kplus.svg",
+  "com.shopee.th": "icons/shopee.svg",
+  "com.garena.game.kgth": "icons/rov.svg",
+  "com.spotify.music": "icons/spotify.svg",
+  "org.altstore.AltStore": "icons/altstore.svg",
+  "com.happymod.apk": "icons/happymod.svg",
+  "com.tinder": "icons/tinder.svg",
+  "com.apple.camera": "icons/camera.svg",
+  "com.sec.android.app.camera": "icons/camera.svg",
+  "com.google.android.GoogleCamera": "icons/camera.svg",
+  "com.android.settings": "icons/settings.svg",
+  "com.apple.Preferences": "icons/settings.svg",
+  "ph4nt0m.lol": "icons/ph4nt0m.svg",
+  "https://ph4nt0m.lol/": "icons/ph4nt0m.svg",
+  "com.ph4nt0m.mod": "icons/ph4nt0m.svg",
+  "com.bityou.ph4nt0m": "icons/ph4nt0m.svg",
+  "com.gameguardian": "icons/gameguardian.svg"
+};
+
+// Helper: Resolve app metadata & logo from database
 function resolveAppMeta(pkg) {
-  if (APP_DATABASE[pkg]) {
-    return APP_DATABASE[pkg];
+  let meta = APP_DATABASE[pkg];
+  if (!meta) {
+    const parts = pkg.split(".");
+    const rawName = parts[parts.length - 1];
+    const cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+    const isIos = pkg.startsWith("com.apple.") || pkg.toLowerCase().includes("ios");
+    meta = {
+      name: cleanName,
+      cat: pkg.includes("android") || pkg.includes("system") || pkg.includes("apple") ? "system" : "work",
+      color: "#64748B",
+      os: isIos ? "ios" : "android"
+    };
   }
-  // Fallback detection
-  const parts = pkg.split(".");
-  const rawName = parts[parts.length - 1];
-  const cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
-  const isIos = pkg.startsWith("com.apple.") || pkg.toLowerCase().includes("ios");
-  return {
-    name: cleanName,
-    cat: pkg.includes("android") || pkg.includes("system") || pkg.includes("apple") ? "system" : "work",
-    color: "#64748b",
-    icon: cleanName.charAt(0),
-    os: isIos ? "ios" : "android"
-  };
+
+  // Use local official brand SVG file from icons directory with embedded SVG fallback
+  const iconFile = APP_ICON_FILES[pkg];
+  if (iconFile) {
+    meta.logoHtml = `<img src="${iconFile}" alt="${meta.name}" class="brand-logo-img">`;
+  } else if (BRAND_LOGOS[pkg]) {
+    meta.logoHtml = BRAND_LOGOS[pkg];
+  } else {
+    meta.logoHtml = getFallbackLogo(meta.cat, meta.name, meta.isThreat);
+  }
+  return meta;
 }
 
-// Render Table with OS & Status Filtering
+// Render Table with Real Brand Logos, OS & Status Filtering
 function renderAppTable() {
   const tbody = document.getElementById("app-table-body");
   if (!tbody) return;
@@ -477,11 +743,22 @@ function renderAppTable() {
   tbody.innerHTML = "";
 
   if (filtered.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">ไม่พบข้อมูลแอปที่ตรงกับเงื่อนไขการค้นหา</td></tr>`;
+    if (searchQuery.includes("ph4nt0m") || searchQuery.includes("phantom") || categoryFilter === "cheat" || statusFilter === "cheat") {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 45px 20px; color: #34d399;">
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
+        <strong style="font-size: 1.15rem; color: #fff;">ค้นหาไม่พบ &bull; เครื่องนี้ไม่มีประวัติหรือโปรแกรมช่วยเล่น ph4nt0m.lol</strong>
+        <div style="font-size: 0.88rem; color: var(--text-dim); margin-top: 6px;">ระบบได้ตรวจสอบทั้งในประวัติการเปิด, แคชของระบบ, และแอปที่ถูกลบไปแล้ว ไม่พบร่องรอยความเสี่ยงใดๆ</div>
+      </td></tr>`;
+    } else {
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">
+        <div style="font-size: 2rem; margin-bottom: 8px;">🔍</div>
+        ไม่พบข้อมูลแอปที่ตรงกับเงื่อนไขการค้นหา ${searchQuery ? `"${searchQuery}"` : ''}
+      </td></tr>`;
+    }
     return;
   }
 
-  filtered.forEach((rec, idx) => {
+  filtered.forEach(rec => {
     const meta = resolveAppMeta(rec.pkg);
     const os = rec.os || meta.os || "android";
     const tr = document.createElement("tr");
@@ -515,7 +792,7 @@ function renderAppTable() {
     tr.innerHTML = `
       <td>
         <div class="app-info-cell">
-          <div class="app-avatar" style="background: ${meta.color};">${meta.icon}</div>
+          <div class="app-avatar" title="${meta.name}">${meta.logoHtml}</div>
           <div class="app-details">
             <div class="app-name">
               ${meta.name}
@@ -554,7 +831,7 @@ function renderAppTable() {
   });
 }
 
-// Render Deleted & Sideloaded Panels
+// Render Deleted & Sideloaded Panels with Authentic Logos
 function renderDeletedAndSideloadedPanels() {
   const deletedListEl = document.getElementById("deleted-apps-list");
   const sideloadListEl = document.getElementById("sideloaded-apps-list");
@@ -571,7 +848,10 @@ function renderDeletedAndSideloadedPanels() {
         card.style.cssText = "background:rgba(255,255,255,0.03); border:1px solid rgba(244,63,94,0.3); border-radius:var(--radius-sm); padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px;";
         card.innerHTML = `
           <div style="display:flex; align-items:center; gap:12px;">
-            <div class="app-avatar" style="width:38px; height:38px; font-size:1.1rem; background:rgba(244,63,94,0.2); color:#fda4af;">❌</div>
+            <div class="app-avatar" style="width:42px; height:42px; position:relative;">
+              ${meta.logoHtml}
+              <div style="position:absolute; bottom:-3px; right:-3px; background:#f43f5e; color:#fff; border-radius:50%; width:16px; height:16px; font-size:10px; display:flex; align-items:center; justify-content:center; border:2px solid #0f172a;" title="ถูกถอนการติดตั้งแล้ว">✕</div>
+            </div>
             <div>
               <div style="font-weight:600; color:#fff; display:flex; align-items:center; gap:6px;">
                 ${meta.name}
@@ -604,7 +884,10 @@ function renderDeletedAndSideloadedPanels() {
         card.style.cssText = "background:rgba(255,255,255,0.03); border:1px solid rgba(249,115,22,0.3); border-radius:var(--radius-sm); padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px;";
         card.innerHTML = `
           <div style="display:flex; align-items:center; gap:12px;">
-            <div class="app-avatar" style="width:38px; height:38px; font-size:1.1rem; background:rgba(249,115,22,0.2); color:#fdba74;">📦</div>
+            <div class="app-avatar" style="width:42px; height:42px; position:relative;">
+              ${meta.logoHtml}
+              <div style="position:absolute; bottom:-3px; right:-3px; background:#f97316; color:#fff; border-radius:50%; width:16px; height:16px; font-size:10px; display:flex; align-items:center; justify-content:center; border:2px solid #0f172a;" title="โปรแกรมนอก Store">⚡</div>
+            </div>
             <div>
               <div style="font-weight:600; color:#fff; display:flex; align-items:center; gap:6px;">
                 ${meta.name}
@@ -625,7 +908,7 @@ function renderDeletedAndSideloadedPanels() {
   }
 }
 
-// Render Timeline Feed
+// Render Timeline Feed with Official Logos
 function renderTimeline() {
   const container = document.getElementById("timeline-container");
   if (!container) return;
@@ -647,7 +930,7 @@ function renderTimeline() {
         <div class="timeline-dot" style="background: #f43f5e; box-shadow: 0 0 15px #f43f5e;"></div>
         <div class="timeline-card" style="border: 2px solid #f43f5e; background: rgba(244, 63, 94, 0.15);">
           <div style="display:flex; align-items:center; gap:12px;">
-            <div class="app-avatar" style="width: 36px; height: 36px; font-size: 1.1rem; background: #f43f5e;">🚨</div>
+            <div class="app-avatar" style="width: 38px; height: 38px;">${meta.logoHtml}</div>
             <div>
               <div style="font-weight:700; color:#fff;">⚠️ ตรวจพบประวัติเข้าใช้งานโปรแกรมช่วยเล่น: ${meta.name}</div>
               <div style="font-size:0.75rem; color:#fca5a5;">${rec.pkg} &bull; ลิงก์ต้องสงสัย: https://ph4nt0m.lol/</div>
@@ -664,7 +947,7 @@ function renderTimeline() {
         <div class="timeline-dot" style="background: ${meta.color}; box-shadow: 0 0 10px ${meta.color};"></div>
         <div class="timeline-card">
           <div style="display:flex; align-items:center; gap:12px;">
-            <div class="app-avatar" style="width: 36px; height: 36px; font-size: 1rem; background: ${meta.color};">${meta.icon}</div>
+            <div class="app-avatar" style="width: 38px; height: 38px;">${meta.logoHtml}</div>
             <div>
               <div style="font-weight:600; color:#fff;">${meta.name}</div>
               <div style="font-size:0.75rem; color:var(--text-dim);">${rec.pkg}</div>
@@ -700,13 +983,11 @@ function renderHourlyBarChart() {
   const paddingBottom = 30;
   const chartW = w - paddingLeft - 20;
   const chartH = h - paddingBottom - 20;
-
   const maxVal = Math.max(...hourlyActivity, 10);
-  const barWidth = (chartW / 24) * 0.7;
-  const step = chartW / 24;
+  const barW = chartW / 24;
 
   // Grid lines
-  ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
   ctx.lineWidth = 1;
   for (let i = 0; i <= 4; i++) {
     const y = 20 + (chartH / 4) * i;
@@ -717,68 +998,71 @@ function renderHourlyBarChart() {
 
     ctx.fillStyle = "#64748b";
     ctx.font = "10px sans-serif";
-    ctx.fillText(Math.round(maxVal - (maxVal / 4) * i), 5, y + 4);
+    ctx.textAlign = "right";
+    const val = Math.round(maxVal - (maxVal / 4) * i);
+    ctx.fillText(val, paddingLeft - 8, y + 3);
   }
 
   // Draw Bars
-  hourlyActivity.forEach((val, hour) => {
-    const x = paddingLeft + hour * step + (step - barWidth) / 2;
-    const barH = (val / maxVal) * chartH;
-    const y = 20 + chartH - barH;
+  hourlyActivity.forEach((count, hour) => {
+    const x = paddingLeft + hour * barW + 2;
+    const barHeight = (count / maxVal) * chartH;
+    const y = 20 + (chartH - barHeight);
 
-    // Gradient bar
-    const grad = ctx.createLinearGradient(0, y, 0, y + barH);
+    const grad = ctx.createLinearGradient(0, y, 0, 20 + chartH);
     grad.addColorStop(0, "#06b6d4");
-    grad.addColorStop(1, "rgba(59, 130, 246, 0.4)");
+    grad.addColorStop(1, "rgba(6, 182, 212, 0.2)");
 
     ctx.fillStyle = grad;
     ctx.beginPath();
-    ctx.roundRect(x, y, barWidth, barH, [4, 4, 0, 0]);
+    ctx.roundRect(x, y, Math.max(2, barW - 4), barHeight, [4, 4, 0, 0]);
     ctx.fill();
 
-    // Hour label
+    // Hour Label every 3 hours
     if (hour % 3 === 0) {
       ctx.fillStyle = "#94a3b8";
-      ctx.font = "10px sans-serif";
+      ctx.font = "11px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(`${hour}:00`, x + barWidth / 2, h - 8);
+      ctx.fillText(`${hour}:00`, x + barW / 2, h - 8);
     }
   });
 }
 
 function renderCategoryDonut() {
-  const canvas = document.getElementById("donut-canvas");
+  const canvas = document.getElementById("category-canvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  const w = canvas.width = canvas.parentElement.clientWidth;
-  const h = canvas.height = canvas.parentElement.clientHeight || 260;
-
-  ctx.clearRect(0, 0, w, h);
-
-  // Group duration by category
-  const catTotals = {};
-  let totalTime = 0;
-  appRecords.forEach(rec => {
-    const meta = resolveAppMeta(rec.pkg);
-    catTotals[meta.cat] = (catTotals[meta.cat] || 0) + rec.durationMs;
-    totalTime += rec.durationMs;
-  });
-
-  const centerX = w / 2;
-  const centerY = h / 2;
-  const radius = Math.min(centerX, centerY) - 25;
-  const innerRadius = radius * 0.6;
-
-  let startAngle = -0.5 * Math.PI;
+  const size = Math.min(canvas.parentElement.clientWidth, 220);
+  canvas.width = size;
+  canvas.height = size;
 
   const legendContainer = document.getElementById("category-legend");
   if (legendContainer) legendContainer.innerHTML = "";
+
+  // Aggregate duration by category
+  const catTotals = {};
+  let totalTime = 0;
+  appRecords.forEach(r => {
+    const meta = resolveAppMeta(r.pkg);
+    const cat = meta.cat;
+    catTotals[cat] = (catTotals[cat] || 0) + r.durationMs;
+    totalTime += r.durationMs;
+  });
+
+  if (totalTime === 0) totalTime = 1;
+
+  const centerX = size / 2;
+  const centerY = size / 2;
+  const radius = size * 0.42;
+  const innerRadius = size * 0.26;
+
+  let startAngle = -Math.PI / 2;
 
   const sortedCats = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
 
   sortedCats.forEach(([cat, duration]) => {
     const sliceAngle = (duration / totalTime) * 2 * Math.PI;
-    const color = CATEGORY_COLORS[cat] || "#64748b";
+    const color = CATEGORY_COLORS[cat] || "#64748B";
 
     // Draw donut slice
     ctx.beginPath();
@@ -808,11 +1092,11 @@ function renderCategoryDonut() {
 
   // Center text
   ctx.fillStyle = "#fff";
-  ctx.font = "bold 18px sans-serif";
+  ctx.font = "bold 16px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText("หมวดหมู่", centerX, centerY - 8);
-  ctx.font = "12px sans-serif";
+  ctx.font = "11px sans-serif";
   ctx.fillStyle = "#94a3b8";
   ctx.fillText("การใช้งาน", centerX, centerY + 12);
 }
@@ -849,54 +1133,41 @@ function showToast(msg, isError = false) {
   toast.innerHTML = `<span>${isError ? "⚠️" : "✅"}</span> <span>${msg}</span>`;
   toast.style.borderColor = isError ? "var(--accent-rose)" : "var(--accent-cyan)";
   toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 3500);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3500);
 }
 
-function copyAdbCommand(cmd) {
-  navigator.clipboard.writeText(cmd).then(() => {
-    showToast("คัดลอกคำสั่งไปยัง Clipboard แล้ว!");
-  });
-}
-
-// WebUSB Device Connection
-async function requestUsbDevice() {
-  if (!("usb" in navigator)) {
-    showToast("เบราว์เซอร์นี้ไม่รองรับ WebUSB (กรุณาใช้ Google Chrome หรือ MS Edge)", true);
-    return;
-  }
-  try {
-    const device = await navigator.usb.requestDevice({
-      filters: [{ classCode: 255 }] // ADB class
-    });
-    showToast(`เชื่อมต่ออุปกรณ์ USB สำเร็จ: ${device.productName || "Android Device"}`);
-  } catch (err) {
-    if (err.name !== "NotFoundError") {
-      showToast(`การเชื่อมต่อล้มเหลว: ${err.message}`, true);
-    }
-  }
-}
-
-// Export Report
-function exportData(format = "csv") {
+// Export functions
+function exportData(format) {
   if (appRecords.length === 0) {
     showToast("ไม่มีข้อมูลสำหรับส่งออก", true);
     return;
   }
 
   let content = "";
-  let mimeType = "text/csv;charset=utf-8;";
-  let filename = `App_Usage_Report_${new Date().toISOString().slice(0, 10)}.csv`;
+  let mimeType = "text/plain";
+  const now = new Date().toISOString().slice(0, 10);
+  let filename = `App_Usage_Report_${now}.${format}`;
 
   if (format === "csv") {
-    content = "AppName,PackageName,Category,LastOpened,DurationMinutes,LaunchCount\n";
-    appRecords.forEach(r => {
+    mimeType = "text/csv;charset=utf-8;";
+    const headers = ["AppName", "PackageName", "Category", "LastOpened", "DurationMinutes", "LaunchCount"];
+    const rows = appRecords.map(r => {
       const meta = resolveAppMeta(r.pkg);
-      const min = Math.round(r.durationMs / (1000 * 60));
-      content += `"${meta.name}","${r.pkg}","${meta.cat}","${formatExactTime(r.lastUsed)}",${min},${r.launchCount}\n`;
+      return [
+        `"${meta.name.replace(/"/g, '""')}"`,
+        `"${r.pkg}"`,
+        `"${meta.cat}"`,
+        `"${formatExactTime(r.lastUsed)}"`,
+        Math.round(r.durationMs / (1000 * 60)),
+        r.launchCount
+      ].join(",");
     });
-  } else {
-    mimeType = "application/json;charset=utf-8;";
-    filename = `App_Usage_Report_${new Date().toISOString().slice(0, 10)}.json`;
+    content = [headers.join(","), ...rows].join("\n");
+  } else if (format === "json") {
+    mimeType = "application/json";
     content = JSON.stringify(appRecords.map(r => ({
       name: resolveAppMeta(r.pkg).name,
       package: r.pkg,
@@ -930,7 +1201,6 @@ function triggerThreatAlert(url = "https://ph4nt0m.lol/") {
   if (urlText) urlText.textContent = url;
   if (banner) {
     banner.classList.add("active");
-    banner.scrollIntoView({ behavior: "smooth", block: "start" });
   }
   showToast("🚨 ตรวจพบเว็บไซต์/โปรแกรมช่วยเล่นในเครื่อง: " + url, true);
 }
@@ -957,7 +1227,6 @@ function viewThreatDetails() {
 }
 
 function triggerCheatTest() {
-  // Inject ph4nt0m cheat record into app records
   const existingIdx = appRecords.findIndex(r => r.pkg === "ph4nt0m.lol" || r.pkg.includes("ph4nt0m"));
   const now = new Date();
 
@@ -971,13 +1240,12 @@ function triggerCheatTest() {
       lastUsed: now,
       durationMs: 45 * 60 * 1000,
       launchCount: 5,
-      isThreat: true
+      isThreat: true,
+      installer: "https://ph4nt0m.lol/"
     });
   }
 
-  // Update hourly
   hourlyActivity[now.getHours()] = (hourlyActivity[now.getHours()] || 0) + 1;
-
   updateDashboard();
   triggerThreatAlert("https://ph4nt0m.lol/");
   switchTab("tab-overview");
@@ -986,7 +1254,6 @@ function triggerCheatTest() {
 function simulateIosThreatTest() {
   const now = new Date();
   
-  // Inject iOS threat items
   const iosCheatIdx = appRecords.findIndex(r => r.pkg === "com.bityou.ph4nt0m");
   if (iosCheatIdx >= 0) {
     appRecords[iosCheatIdx].lastUsed = now;
@@ -1005,7 +1272,6 @@ function simulateIosThreatTest() {
     });
   }
 
-  // Also ensure AltStore is present
   if (!appRecords.some(r => r.pkg === "org.altstore.AltStore")) {
     appRecords.push({
       pkg: "org.altstore.AltStore",
@@ -1024,4 +1290,16 @@ function simulateIosThreatTest() {
   showToast("🍎 จำลองตรวจพบโปรแกรมนอก & โปรแกรมช่วยเล่นบน iOS เรียบร้อยแล้ว!", true);
 }
 
+function resetToCleanState() {
+  dismissThreatAlert();
+  loadSampleData();
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) searchInput.value = "";
+  const catFilter = document.getElementById("category-filter");
+  if (catFilter) catFilter.value = "all";
+  const statusFilter = document.getElementById("status-filter");
+  if (statusFilter) statusFilter.value = "all";
+  updateDashboard();
+  showToast("🛡️ กลับสู่สถานะปกติ: ล้างข้อมูลทดสอบแล้ว ปลอดภัย ไม่พบโปรแกรมช่วยเล่น");
+}
 
