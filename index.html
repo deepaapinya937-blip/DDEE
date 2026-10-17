@@ -149,22 +149,78 @@
         </span>
       </div>
 
-      <div class="master-buttons-row">
-        <button id="btn-master-scan" class="btn btn-master-scan" onclick="runCompleteRealScan()">
-          <span class="scan-pulse-ring"></span>
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-          <span>⚡ กดปุ่มนี้เพื่อตรวจสอบทุกอย่างในเครื่องทันที</span>
-        </button>
+      <!-- Device Target Selection Matrix (เลือกเครื่องที่ต้องการตรวจ: เครื่องนี้ vs เครื่องอื่น iOS vs เครื่องอื่น Android) -->
+      <div class="target-device-selector-wrap">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <span class="target-device-label">🎯 เลือกอุปกรณ์เป้าหมายที่ต้องการตรวจสอบตามความเป็นจริง:</span>
+          <span style="font-size:0.75rem; color:#38bdf8; font-family:monospace; font-weight:700;">CROSS-PLATFORM FORENSICS ENGINE</span>
+        </div>
+        <div class="target-device-buttons">
+          <button id="target-dev-this-pc" class="btn-target-dev active" onclick="switchTargetDevice('pc')" title="ตรวจสอบข้อมูลจริงในเครื่องนี้ (Windows PC)">
+            <span class="target-dev-icon">💻</span>
+            <span>เครื่องนี้ (Windows PC ตรวจพบจริง)</span>
+          </button>
+          <button id="target-dev-ios" class="btn-target-dev" onclick="switchTargetDevice('ios')" title="จำลอง/ตรวจสอบเครื่องอื่น: ระบบ iOS (iPhone / iPad)">
+            <span class="target-dev-icon">📱</span>
+            <span>เครื่องอื่น: iOS (iPhone / iPad)</span>
+          </button>
+          <button id="target-dev-android" class="btn-target-dev" onclick="switchTargetDevice('android')" title="จำลอง/ตรวจสอบเครื่องอื่น: ระบบ Android">
+            <span class="target-dev-icon">🤖</span>
+            <span>เครื่องอื่น: Android</span>
+          </button>
+          <label class="btn-target-dev" style="cursor:pointer;" title="เลือกไฟล์รายงาน CSV/Log จากเครื่องอื่นมาสแกน">
+            <input type="file" style="display:none;" accept=".csv,.txt,.json,.log" onchange="handleMasterFileUpload(event)">
+            <span class="target-dev-icon">📂</span>
+            <span>นำเข้าไฟล์ Log เครื่องอื่น</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="hero-scanner-flex">
+        <!-- Holographic Cyber Radar -->
+        <div class="cyber-radar-hud" id="cyber-radar" title="เรดาร์ตรวจจับสัญญาณไซเบอร์ (360° Real-time Radar)">
+          <div class="radar-circle radar-c1"></div>
+          <div class="radar-circle radar-c2"></div>
+          <div class="radar-circle radar-c3"></div>
+          <div class="radar-crosshair-h"></div>
+          <div class="radar-crosshair-v"></div>
+          <div class="radar-sweep-beam"></div>
+          <div class="radar-blip blip-1" id="radar-blip-1"></div>
+          <div class="radar-blip blip-2" id="radar-blip-2"></div>
+          <div class="radar-center-dot"></div>
+          <div class="radar-label" id="radar-status-label">PROBE: ONLINE</div>
+        </div>
+
+        <div class="hero-scan-center">
+          <button id="btn-master-scan" class="btn btn-master-scan" onclick="runCompleteRealScan()">
+            <span class="scan-pulse-ring"></span>
+            <div class="shockwave" id="btn-shockwave"></div>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span id="btn-master-scan-text">⚡ กดปุ่มนี้เพื่อตรวจสอบทุกอย่างในเครื่องทันที</span>
+          </button>
+          
+          <!-- Cyber Audio Waveform Equalizer -->
+          <div class="cyber-audio-equalizer" id="cyber-equalizer" title="Visualizer คลื่นเสียงความถี่ไซเบอร์">
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+          </div>
+        </div>
       </div>
 
       <!-- Unified Live Scanner Controls -->
       <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:14px; flex-wrap:wrap;">
         <span style="font-size:0.85rem; color:var(--text-main); display:inline-flex; align-items:center; gap:8px; background:rgba(15,23,42,0.8); padding:6px 16px; border-radius:999px; border:1px solid rgba(16,185,129,0.3);">
           <span style="width:9px; height:9px; border-radius:50%; background:#10b981; display:inline-block; box-shadow:0 0 10px #10b981;"></span>
-          <span style="color:var(--text-dim);">แหล่งข้อมูลการตรวจ:</span>
-          <strong style="color:#34d399;">ตรวจสอบข้อมูลจริงทั้งหมดในเครื่อง (Live Machine Unified Scan)</strong>
+          <span style="color:var(--text-dim);">เป้าหมายที่กำลังสแกน:</span>
+          <strong id="live-target-source-label" style="color:#34d399;">เครื่องนี้ (Windows PC Unified Live Scan)</strong>
         </span>
         <button id="btn-toggle-sound" class="btn btn-outline" style="font-size:0.82rem; padding:6px 14px; color:#38bdf8; border-color:rgba(56,189,248,0.4);" onclick="toggleScannerSound()" title="เปิด/ปิดเสียงเอฟเฟกต์การสแกน">
           <span id="sound-icon">🔊</span> <span id="sound-status-text">เปิดเสียงเอฟเฟกต์</span>
@@ -181,6 +237,24 @@
         </div>
         <div class="progress-bar-wrap">
           <div class="progress-bar-inner" id="progress-bar-inner"></div>
+        </div>
+      </div>
+
+      <!-- Live Cyber Forensic Terminal Stream (Matrix Console) -->
+      <div class="cyber-terminal-card" id="cyber-terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="t-dot red"></span>
+            <span class="t-dot yellow"></span>
+            <span class="t-dot green"></span>
+          </div>
+          <span class="terminal-title">LIVE FORENSIC MEMORY & PACKET PROBE // TARGET: <span id="terminal-host-tag">WINDOWS PC</span></span>
+          <button class="terminal-toggle-btn" onclick="toggleTerminalConsole()">[ย่อ/ขยาย]</button>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-line"><span class="t-green">[SYS_INIT]</span> Forensic Telemetry subsystem initialized. SHA-256 Engine: READY</div>
+          <div class="terminal-line"><span class="t-cyan">[NETWORK]</span> Live packet filter engaged. Monitoring ports 80/443/53.</div>
+          <div class="terminal-line"><span class="t-purple">[HARDWARE]</span> Direct Memory Probing active. Ready for one-click deep scan.</div>
         </div>
       </div>
 

@@ -1814,3 +1814,329 @@ footer {
   from { box-shadow: 0 0 10px #f43f5e; }
   to { box-shadow: 0 0 25px #f43f5e, 0 0 40px rgba(244, 63, 94, 0.6); }
 }
+
+/* 11. Target Device Selector Switcher (ตรวจเครื่องอื่นตามความจริง) */
+.target-device-selector-wrap {
+  margin: 16px 0 20px 0;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.08);
+}
+
+.target-device-label {
+  font-size: 0.86rem;
+  color: var(--text-dim);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.target-device-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-target-dev {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  font-family: inherit;
+}
+
+.btn-target-dev:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-target-dev.active {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.25) 0%, rgba(99, 102, 241, 0.35) 100%);
+  border-color: #38bdf8;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(56, 189, 248, 0.2);
+}
+
+.target-dev-icon {
+  font-size: 1.1rem;
+}
+
+/* 12. Hero Scanner Layout with Holographic Radar */
+.hero-scanner-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin: 18px 0;
+  flex-wrap: wrap;
+}
+
+.hero-scan-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Holographic Cyber Radar */
+.cyber-radar-hud {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(15, 23, 42, 0.85) 70%);
+  border: 2px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.3), inset 0 0 25px rgba(6, 182, 212, 0.15);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.radar-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px dashed rgba(56, 189, 248, 0.3);
+  pointer-events: none;
+}
+
+.radar-c1 { width: 35%; height: 35%; }
+.radar-c2 { width: 65%; height: 65%; }
+.radar-c3 { width: 95%; height: 95%; border-style: solid; border-color: rgba(56, 189, 248, 0.2); }
+
+.radar-crosshair-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(56, 189, 248, 0.25);
+}
+
+.radar-crosshair-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(56, 189, 248, 0.25);
+}
+
+.radar-sweep-beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(6, 182, 212, 0.6) 0deg, rgba(6, 182, 212, 0.05) 55deg, transparent 60deg);
+  animation: radar-spin 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes radar-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.radar-blip {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f43f5e;
+  box-shadow: 0 0 10px #f43f5e, 0 0 20px #f43f5e;
+  animation: blip-fade 1.8s infinite;
+}
+
+.blip-1 { top: 32%; left: 68%; }
+.blip-2 { top: 72%; left: 34%; background: #f59e0b; box-shadow: 0 0 10px #f59e0b; }
+
+@keyframes blip-fade {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.radar-center-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.radar-label {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.62rem;
+  font-family: monospace;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 6px #0ea5e9;
+  font-weight: 700;
+}
+
+/* 13. Cyber Audio Waveform Equalizer */
+.cyber-audio-equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.eq-bar {
+  width: 3px;
+  height: 4px;
+  background: #38bdf8;
+  border-radius: 2px;
+  transition: height 0.15s ease;
+  box-shadow: 0 0 6px #38bdf8;
+}
+
+.cyber-audio-equalizer.active .eq-bar:nth-child(1) { animation: eq-bounce 0.6s infinite 0.1s; }
+.cyber-audio-equalizer.active .eq-bar:nth-child(2) { animation: eq-bounce 0.5s infinite 0.2s; }
+.cyber-audio-equalizer.active .eq-bar:nth-child(3) { animation: eq-bounce 0.7s infinite 0.15s; }
+.cyber-audio-equalizer.active .eq-bar:nth-child(4) { animation: eq-bounce 0.4s infinite 0.3s; }
+.cyber-audio-equalizer.active .eq-bar:nth-child(5) { animation: eq-bounce 0.65s infinite 0.05s; }
+.cyber-audio-equalizer.active .eq-bar:nth-child(6) { animation: eq-bounce 0.55s infinite 0.25s; }
+.cyber-audio-equalizer.active .eq-bar:nth-child(7) { animation: eq-bounce 0.45s infinite 0.1s; }
+.cyber-audio-equalizer.active .eq-bar:nth-child(8) { animation: eq-bounce 0.75s infinite 0.35s; }
+
+@keyframes eq-bounce {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; background: #a855f7; box-shadow: 0 0 8px #a855f7; }
+}
+
+/* 14. Shockwave Ripple from Scan Button */
+.shockwave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 0 30px #38bdf8;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.shockwave.active {
+  animation: shockwave-expand 0.9s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes shockwave-expand {
+  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(5); opacity: 0; border-width: 1px; }
+}
+
+/* 15. Live Cyber Forensic Terminal Matrix Stream */
+.cyber-terminal-card {
+  margin-top: 18px;
+  background: rgba(3, 7, 18, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.t-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.t-dot.red { background: #ef4444; }
+.t-dot.yellow { background: #f59e0b; }
+.t-dot.green { background: #10b981; }
+
+.terminal-title {
+  font-family: monospace;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+}
+
+.terminal-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-family: monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.terminal-toggle-btn:hover {
+  color: #38bdf8;
+}
+
+.terminal-body {
+  padding: 10px 14px;
+  font-family: 'Consolas', 'Fira Code', monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  max-height: 130px;
+  overflow-y: auto;
+  color: #e2e8f0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.terminal-line {
+  margin-bottom: 3px;
+  display: flex;
+  gap: 8px;
+  word-break: break-all;
+}
+
+.t-green { color: #34d399; font-weight: 700; }
+.t-cyan { color: #38bdf8; font-weight: 700; }
+.t-purple { color: #c084fc; font-weight: 700; }
+.t-amber { color: #fde68a; font-weight: 700; }
+.t-red { color: #f87171; font-weight: 700; }
+
