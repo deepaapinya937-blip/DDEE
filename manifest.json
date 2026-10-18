@@ -1,0 +1,28 @@
+{
+  "name": "Mobile App Usage Inspector",
+  "short_name": "AppInspector",
+  "description": "ระบบตรวจสอบประวัติการเปิดแอปและเบราว์เซอร์อย่างแม่นยำและเป็นส่วนตัว",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#070a13",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "icons/app-icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "security"],
+  "shortcuts": [
+    {
+      "name": "ตรวจสอบประวัติ",
+      "short_name": "สแกน",
+      "description": "เริ่มการสแกนประวัติทันที",
+      "url": "./index.html#scan"
+    }
+  ]
+}

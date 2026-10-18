@@ -39,13 +39,14 @@
 }
 
 body {
-  font-family: 'Prompt', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Outfit', 'Prompt', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-main);
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
   position: relative;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Background Ambient Glows */
@@ -2139,4 +2140,383 @@ footer {
 .t-purple { color: #c084fc; font-weight: 700; }
 .t-amber { color: #fde68a; font-weight: 700; }
 .t-red { color: #f87171; font-weight: 700; }
+
+/* =============================================================
+   16. Mobile Bottom Action Dock (เฉพาะมือถือและจอสัมผัส)
+   ============================================================= */
+.mobile-dock-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  background: rgba(6, 9, 20, 0.94);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid rgba(56, 189, 248, 0.28);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  justify-content: space-around;
+  align-items: center;
+  padding: 4px 10px max(4px, env(safe-area-inset-bottom));
+}
+
+.dock-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  touch-action: manipulation;
+  position: relative;
+}
+
+.dock-btn:active {
+  transform: scale(0.92);
+  color: #38bdf8;
+}
+
+.dock-btn .dock-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.dock-btn-scan {
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  color: #fff;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  margin-top: -24px;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.6), 0 0 15px rgba(6, 182, 212, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.dock-btn-scan:active {
+  transform: scale(0.94) translateY(2px);
+}
+
+.dock-scan-glow {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 1.5px solid #34d399;
+  animation: pulseScanRing 2s infinite ease-out;
+  pointer-events: none;
+}
+
+/* =============================================================
+   17. Complete Cross-Platform Responsive Engine (ทุกอุปกรณ์)
+   ============================================================= */
+
+/* --- Large Tablets & Laptops (Max Width 1100px) --- */
+@media (max-width: 1100px) {
+  .container {
+    max-width: 100%;
+    padding: 20px 16px 70px 16px;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .hero-scanner-flex {
+    gap: 20px;
+  }
+}
+
+/* --- Tablets & iPads (Max Width 900px) --- */
+@media (max-width: 900px) {
+  .brand-info h1 {
+    font-size: 1.45rem;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .target-device-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .hero-scanner-flex {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-scan-center {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn-master-scan {
+    width: 100%;
+    max-width: 480px;
+    justify-content: center;
+  }
+}
+
+/* --- Mobile Smartphones & Phablets (Max Width 768px) --- */
+@media (max-width: 768px) {
+  .mobile-dock-bar {
+    display: flex;
+  }
+  .container {
+    padding: 14px 12px 100px 12px;
+  }
+  
+  /* Header Stacking */
+  header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+  }
+  .brand-wrapper {
+    width: 100%;
+    align-items: flex-start;
+  }
+  .logo-badge {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+  }
+  .brand-info h1 {
+    font-size: 1.35rem;
+  }
+  .header-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .header-actions .btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.82rem;
+    padding: 9px 10px;
+  }
+
+  /* Telemetry HUD on Mobile */
+  .cyber-telemetry-hud {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .telemetry-pill {
+    padding: 5px 8px;
+    font-size: 0.68rem;
+    justify-content: center;
+  }
+
+  /* Live Client Detector */
+  .live-client-detector {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .detector-left {
+    align-items: flex-start;
+  }
+  .detector-detail-row {
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 0.74rem;
+  }
+
+  /* Master Scanner Hero */
+  .master-scanner-hero {
+    padding: 18px 14px;
+    border-radius: var(--radius-md);
+  }
+  .master-scanner-hero h2 {
+    font-size: 1.25rem;
+  }
+  .master-scanner-hero p {
+    font-size: 0.84rem;
+    margin-bottom: 16px;
+  }
+  .cyber-radar-hud {
+    width: 130px;
+    height: 130px;
+  }
+  .btn-master-scan {
+    padding: 14px 18px;
+    font-size: 0.98rem;
+    border-radius: 12px;
+  }
+
+  /* Target Device Buttons */
+  .target-device-buttons {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+  .btn-target-dev {
+    padding: 9px 12px;
+    font-size: 0.82rem;
+    justify-content: flex-start;
+  }
+
+  /* Tabs Horizontal Scroll with Smooth Touch */
+  .tabs-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    gap: 6px;
+  }
+  .tabs-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .tab-btn {
+    padding: 9px 14px;
+    font-size: 0.84rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Tables Scrollable with Smooth Visual Hint */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    box-shadow: inset -10px 0 15px -10px rgba(56, 189, 248, 0.2);
+  }
+  .app-table {
+    min-width: 680px;
+  }
+
+  /* Threat Banner on Mobile */
+  .threat-alert-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  .threat-left {
+    align-items: flex-start;
+  }
+  .threat-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+  .threat-actions .btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 0.82rem;
+    padding: 10px;
+  }
+
+  /* Forensic Modal on Mobile */
+  .forensic-modal-card {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    max-height: 88vh !important;
+    padding: 16px 14px !important;
+    border-radius: 16px !important;
+  }
+}
+
+/* --- Small Mobile Phones (Max Width 480px - iPhone SE, Galaxy, Pixel) --- */
+@media (max-width: 480px) {
+  .container {
+    padding: 10px 8px 105px 8px;
+  }
+  .brand-info h1 {
+    font-size: 1.18rem;
+  }
+  .brand-info p {
+    font-size: 0.78rem;
+  }
+  .header-actions {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 14px 12px;
+  }
+  .stat-val {
+    font-size: 1.35rem;
+  }
+  .master-scanner-hero h2 {
+    font-size: 1.15rem;
+  }
+  .btn-master-scan {
+    font-size: 0.9rem;
+    padding: 12px 14px;
+  }
+  .btn-master-scan svg {
+    width: 20px;
+    height: 20px;
+  }
+  .device-badge-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .device-pill {
+    justify-content: center;
+    font-size: 0.74rem;
+  }
+}
+
+/* --- High-DPI Screens & Retina Optimization --- */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .app-avatar img,
+  .brand-logo-img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* --- Print Stylesheet for Report Printing --- */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .mobile-dock-bar,
+  #cyber-particles-canvas,
+  .cyber-radar-hud,
+  .master-scanner-hero,
+  .header-actions,
+  .tabs-nav,
+  .scan-laser-beam {
+    display: none !important;
+  }
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  .stat-card,
+  .panel,
+  .app-table {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
 

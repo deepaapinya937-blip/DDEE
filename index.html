@@ -2,12 +2,23 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Mobile App Usage Inspector | ตรวจสอบประวัติการเปิดแอปมือถือ</title>
+  
+  <!-- Mobile & PWA Configuration -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AppInspector">
+  <link rel="icon" type="image/svg+xml" href="icons/app-icon.svg">
+  <link rel="apple-touch-icon" href="icons/app-icon.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261017-real-logos">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261018-ultra-responsive-ui">
 </head>
 <body>
   <!-- High-Tech Interactive Cyber Particles Canvas -->
@@ -38,6 +49,12 @@
       </div>
 
       <div class="header-actions">
+        <button id="btn-quick-real-data" class="btn btn-outline" style="color:#10b981; border-color:rgba(16,185,129,0.4); background:rgba(16,185,129,0.12);" onclick="loadMasterTruthReport()" title="โหลดข้อมูลประวัติจริงทั้งหมดของเครื่อง (100% Genuine Machine Report)">
+          <span style="font-size:1.05rem;">📊</span> <strong>ข้อมูลของจริงทั้งหมด</strong>
+        </button>
+        <button id="btn-install-pwa" class="btn btn-outline" style="color:#38bdf8; border-color:rgba(56,189,248,0.4); display:inline-flex; align-items:center; gap:6px; background:rgba(6,182,212,0.12);" onclick="promptInstallPwa()" title="ติดตั้งเป็นแอปพลิเคชันบนมือถือ">
+          <span style="font-size:1.1rem;">📲</span> <strong>ติดตั้งแอปบนมือถือ</strong>
+        </button>
         <label class="btn btn-outline" style="cursor:pointer;" title="เลือกไฟล์รายงาน CSV หรือ Log จากเครื่อง">
           <input type="file" id="header-file-input" style="display:none;" accept=".csv,.txt,.json,.log" onchange="handleMasterFileUpload(event)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -46,7 +63,7 @@
             <line x1="16" y1="13" x2="8" y2="13"/>
             <line x1="16" y1="17" x2="8" y2="17"/>
           </svg>
-          📂 เลือกไฟล์รายงาน (CSV/Log)
+          📂 เลือกไฟล์รายงาน
         </label>
         <button class="btn btn-outline" onclick="exportData('csv')">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -220,7 +237,7 @@
         <span style="font-size:0.85rem; color:var(--text-main); display:inline-flex; align-items:center; gap:8px; background:rgba(15,23,42,0.8); padding:6px 16px; border-radius:999px; border:1px solid rgba(16,185,129,0.3);">
           <span style="width:9px; height:9px; border-radius:50%; background:#10b981; display:inline-block; box-shadow:0 0 10px #10b981;"></span>
           <span style="color:var(--text-dim);">เป้าหมายที่กำลังสแกน:</span>
-          <strong id="live-target-source-label" style="color:#34d399;">เครื่องนี้ (Windows PC Unified Live Scan)</strong>
+          <strong id="live-target-source-label" style="color:#34d399;">ระบบตรวจสอบข้อมูลจริงในเครื่อง (Unified Live Scan)</strong>
         </span>
         <button id="btn-toggle-sound" class="btn btn-outline" style="font-size:0.82rem; padding:6px 14px; color:#38bdf8; border-color:rgba(56,189,248,0.4);" onclick="toggleScannerSound()" title="เปิด/ปิดเสียงเอฟเฟกต์การสแกน">
           <span id="sound-icon">🔊</span> <span id="sound-status-text">เปิดเสียงเอฟเฟกต์</span>
@@ -248,7 +265,7 @@
             <span class="t-dot yellow"></span>
             <span class="t-dot green"></span>
           </div>
-          <span class="terminal-title">LIVE FORENSIC MEMORY & PACKET PROBE // TARGET: <span id="terminal-host-tag">WINDOWS PC</span></span>
+          <span class="terminal-title">LIVE FORENSIC MEMORY & PACKET PROBE // TARGET: <span id="terminal-host-tag">SYSTEM HOST</span></span>
           <button class="terminal-toggle-btn" onclick="toggleTerminalConsole()">[ย่อ/ขยาย]</button>
         </div>
         <div class="terminal-body" id="terminal-body">
@@ -348,10 +365,18 @@
             <line x1="14" y1="11" x2="14" y2="17"/>
           </svg>
         </div>
+      <div class="stat-card" id="stat-card-threats" style="border-color:rgba(244,63,94,0.3); background:linear-gradient(145deg, rgba(30,20,35,0.7) 0%, rgba(15,10,25,0.85) 100%);">
+        <div class="stat-icon" style="background:rgba(244,63,94,0.2); color:var(--accent-rose); box-shadow: 0 0 15px rgba(244,63,94,0.35);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
         <div class="stat-content">
-          <div class="stat-label">แอปที่ถูกลบไปแล้ว</div>
-          <div class="stat-val" id="stat-deleted-count" style="color:var(--accent-rose);">0</div>
-          <div class="stat-sub">ตรวจพบประวัติค้างอยู่</div>
+          <div class="stat-label" style="color:#fda4af;">โปรแกรมช่วยเล่น / เสี่ยง</div>
+          <div class="stat-val" id="stat-threat-count" style="color:var(--accent-rose);">0</div>
+          <div class="stat-sub" id="stat-threat-sub">ตรวจจับความจริง 100%</div>
         </div>
       </div>
     </section>
@@ -762,7 +787,7 @@
           </div>
           <div>
             <h3 style="margin:0; font-size:1.25rem; color:#fff; font-weight:800;">🔍 บันทึกประวัติเวลาจริง (Forensic Time Log)</h3>
-            <span style="font-size:0.82rem; color:var(--text-dim);">รายละเอียดวันและเวลาที่กดเข้าชมเว็บไซต์จริง พร้อมระบุอุปกรณ์ (PC / iOS / Android)</span>
+            <span style="font-size:0.82rem; color:var(--text-dim);">รายละเอียดวันและเวลาที่เข้าชมเว็บไซต์จริง (ความแม่นยำระดับวินาที)</span>
           </div>
         </div>
         
@@ -781,13 +806,107 @@
       </div>
     </div>
 
+    <!-- Interactive Mobile App Installation Modal -->
+    <div id="mobile-install-modal" class="forensic-modal-overlay" onclick="closeMobileInstallModal(event)">
+      <div class="forensic-modal-content" onclick="event.stopPropagation()" style="max-width:540px;">
+        <button class="forensic-modal-close" onclick="closeMobileInstallModal()">&times;</button>
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:14px;">
+          <div style="width:52px; height:52px; border-radius:14px; background:linear-gradient(135deg, rgba(56,189,248,0.2), rgba(16,185,129,0.2)); border:1px solid rgba(56,189,248,0.4); display:flex; align-items:center; justify-content:center; font-size:1.8rem;">
+            📲
+          </div>
+          <div>
+            <h3 style="margin:0; font-size:1.3rem; color:#fff; font-weight:800;">ติดตั้งเป็น Application บนมือถือ</h3>
+            <span style="font-size:0.83rem; color:var(--text-dim);">ใช้งานเต็มจอเสมือนแอปแท้ ไม่ต้องมีแถบ URL รวดเร็วและเปิดแบบออฟไลน์ได้</span>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <!-- Android Direct Install Box -->
+          <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:12px; padding:14px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <strong style="color:#34d399; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
+                <span>🤖</span> สำหรับ Android (Chrome / Edge)
+              </strong>
+              <span class="badge" style="background:#10b981; color:#fff; font-size:0.75rem;">1-Tap Install</span>
+            </div>
+            <p style="font-size:0.84rem; color:#cbd5e1; margin:0 0 10px 0; line-height:1.5;">
+              กดปุ่มด้านล่างเพื่อเพิ่มไอคอนแอปพลิเคชันลงในหน้าจอโทรศัพท์ของคุณทันที
+            </p>
+            <button id="btn-trigger-android-install" class="btn btn-primary" style="width:100%; justify-content:center; padding:10px; font-weight:700; background:linear-gradient(135deg, #10b981 0%, #06b6d4 100%);" onclick="executeNativeInstallPrompt()">
+              ⚡ กดติดตั้งลงเครื่อง Android ทันที
+            </button>
+          </div>
+
+          <!-- iOS Safari Guide Box -->
+          <div style="background:rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.3); border-radius:12px; padding:14px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <strong style="color:#c084fc; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
+                <span>🍎</span> สำหรับ iPhone / iPad (Apple Safari)
+              </strong>
+              <span class="badge" style="background:#a855f7; color:#fff; font-size:0.75rem;">Add to Home Screen</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:0.83rem; color:#e2e8f0; line-height:1.5;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="background:rgba(255,255,255,0.1); width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75rem;">1</span>
+                <span>แตะปุ่ม <strong>แชร์ (Share)</strong> 📤 ที่แถบเมนูด้านล่างของ Safari</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="background:rgba(255,255,255,0.1); width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75rem;">2</span>
+                <span>เลื่อนลงแล้วเลือก <strong>"เพิ่มไปยังหน้าจอโฮม" (Add to Home Screen)</strong> ➕</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="background:rgba(255,255,255,0.1); width:24px; height:24px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.75rem;">3</span>
+                <span>กด <strong>"เพิ่ม" (Add)</strong> มุมขวาบน จะได้ไอคอนแอปบนหน้าจอมือถือทันที</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Standalone APK Package Info -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 14px; font-size:0.82rem; color:var(--text-muted); line-height:1.5;">
+            📦 <strong>ต้องการไฟล์ APK แยกเดี่ยว?</strong> คุณสามารถใช้ Capacitor หรือ TWA เพื่อหุ้มเป็นไฟล์ <code>.apk</code> ติดตั้งโดยตรงบน Android ได้
+          </div>
+        </div>
+
+        <div style="margin-top:18px; display:flex; justify-content:flex-end;">
+          <button class="btn btn-outline" onclick="closeMobileInstallModal()">
+            ปิดหน้าต่าง
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
     <footer>
       <p>Mobile App Usage Inspector &bull; ออกแบบเพื่อวิเคราะห์ประวัติการเปิดใช้งานแอปพลิเคชันอย่างเป็นส่วนตัวและปลอดภัยบนเครื่องของคุณ</p>
     </footer>
   </div>
 
-  <script src="real_system_scan.js?v=20261017"></script>
-  <script src="app.js?v=20261017-single-button-real-scan"></script>
+  <!-- Mobile Bottom Action Dock (เฉพาะอุปกรณ์หน้าจอสัมผัส/มือถือ) -->
+  <nav class="mobile-dock-bar" id="mobile-dock-bar" aria-label="Mobile Navigation">
+    <button class="dock-btn" onclick="switchTab('tab-overview'); window.scrollTo({top:0, behavior:'smooth'});">
+      <span class="dock-icon">📊</span>
+      <span class="dock-label">ภาพรวม</span>
+    </button>
+    <button class="dock-btn" onclick="switchTab('tab-apps');">
+      <span class="dock-icon">📱</span>
+      <span class="dock-label">ตารางแอป</span>
+    </button>
+    <button class="dock-btn dock-btn-scan" onclick="runCompleteRealScan();">
+      <span class="dock-scan-glow"></span>
+      <span class="dock-icon" style="font-size:1.3rem;">⚡</span>
+      <span class="dock-label" style="font-weight:700; color:#fff;">สแกนด่วน</span>
+    </button>
+    <button class="dock-btn" onclick="loadMasterTruthReport();">
+      <span class="dock-icon">🎯</span>
+      <span class="dock-label">ข้อมูลจริง</span>
+    </button>
+    <button class="dock-btn" onclick="promptInstallPwa();">
+      <span class="dock-icon">📲</span>
+      <span class="dock-label">ลงแอป</span>
+    </button>
+  </nav>
+
+  <script src="real_system_scan.js?v=20261018-ultra-truth"></script>
+  <script src="app.js?v=20261018-ultra-responsive-truth"></script>
 </body>
 </html>
